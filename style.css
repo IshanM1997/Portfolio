@@ -1,0 +1,435 @@
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: rgba(21, 21, 21, 0.85); /* Added slight transparency for background blend */
+
+    --accent: #ffd60a;
+    --accent-orange: #ff8c00;
+    --accent-red: #ff3b30;
+
+    --text-main: #ffffff;
+    --text-muted: #e2e8f0;
+
+    --nav-height: 70px;
+
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-primary);
+}
+
+body {
+    color: var(--text-main);
+    
+    /* How to lower background image transparency:
+       Change the final '0.6' and '0.8' values below. 
+       Increasing them makes the dark tint thicker (lowering the background picture visibility).
+       Decreasing them brings more of the vibrant background picture through.
+    */
+    background-image: linear-gradient(rgba(10, 10, 10, 0.6), rgba(10, 10, 10, 0.8)), url("bg_image.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* ==========================================================================
+   GLOBAL LAYOUT
+   ========================================================================== */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section {
+    padding: calc(var(--nav-height) + 4rem) 0 6rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 2.7rem;
+    margin-bottom: 3rem;
+    position: relative;
+    color: var(--text-main);
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -12px;
+    width: 70px;
+    height: 4px;
+    background: var(--accent-red);
+    border-radius: 5px;
+}
+
+/* ==========================================================================
+   NAVIGATION
+   ========================================================================== */
+
+.navbar-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    
+    /* Changed to transparent background so the global body bg_image shows through cleanly */
+    background: transparent; 
+    
+    /* Optional: Kept the blur engine to slightly soften content sliding underneath */
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 214, 10, 0.15);
+    transition: var(--transition-smooth);
+}
+
+.nav-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3rem;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-main);
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--accent) !important;
+}
+
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-main);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.hero-section {
+    padding-left: 0; /* Reset left padding to look clean inside container */
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.highlight {
+    color: var(--accent);
+}
+
+.hero-content p {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin-bottom: 2rem;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+
+.btn {
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-smooth);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #000;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: var(--accent-orange);
+    transform: translateY(-3px);
+    color: #000;
+}
+
+.btn-secondary {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    background: transparent;
+    backdrop-filter: blur(5px);
+}
+
+.btn-secondary:hover {
+    background: var(--accent);
+    color: #000;
+}
+
+/* ==========================================================================
+   ABOUT SECTION
+   ========================================================================== */
+
+.about-section {
+    background: rgba(16, 16, 16, 0.4); /* Translucent section tracking */
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-image-container {
+    display: flex;
+    justify-content: center;
+}
+
+.portfolio-avatar {
+    width: 280px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 16px;
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 30px rgba(255,214,10,0.25);
+}
+
+.about-text p {
+    line-height: 1.8;
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+.about-skills h3 {
+    margin: 2rem 0 1rem;
+}
+
+.skills-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+
+.tag {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid var(--accent-orange);
+    background: rgba(17, 17, 17, 0.8);
+    color: var(--text-main);
+    backdrop-filter: blur(5px);
+}
+
+/* ==========================================================================
+   PROJECTS
+   ========================================================================== */
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.project-card {
+    background: var(--bg-secondary);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition-smooth);
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-orange);
+    box-shadow: 0 10px 25px rgba(255,140,0,0.15);
+}
+
+.project-image {
+    height: 200px;
+    background: rgba(255,214,10,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--accent);
+}
+
+.project-info {
+    padding: 1.5rem;
+}
+
+.project-info p {
+    color: var(--text-muted);
+    margin: 1rem 0;
+}
+
+.project-tags span {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    margin-right: 0.5rem;
+    border-radius: 5px;
+    background: #111;
+    color: var(--accent);
+    font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   CONTACT SECTION
+   ========================================================================== */
+
+.contact-box {
+    background: var(--bg-secondary);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 2.5rem 1.8rem;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition-smooth);
+    width: 100%;
+    height: 100%;
+}
+
+.contact-box:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 25px rgba(255,214,10,0.12);
+}
+
+.contact-box h2 {
+    margin-bottom: 1rem;
+}
+
+.contact-box p {
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.8rem;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255,214,10,0.12);
+    background: rgba(10, 10, 10, 0.7);
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+
+.reveal-up,
+.reveal-left,
+.reveal-right {
+    opacity: 0;
+    transition:
+        transform 0.8s cubic-bezier(0.25,1,0.5,1),
+        opacity 0.8s ease;
+}
+
+.reveal-up { transform: translateY(40px); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+
+.reveal-active {
+    opacity: 1;
+    transform: translate(0) !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: var(--nav-height);
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - var(--nav-height));
+        background: var(--bg-primary);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 3rem;
+        padding-top: 3rem;
+        transition: var(--transition-smooth);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .hero-content h1 {
+        font-size: 2.7rem;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .skills-tags {
+        justify-content: center;
+    }
+
+    .portfolio-avatar {
+        width: 220px;
+        height: 220px;
+    }
+}
