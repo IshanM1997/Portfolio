@@ -433,3 +433,324 @@ footer {
         height: 220px;
     }
 }
+/* ==========================================================================
+   ABOUT SECTION — TABS
+   ========================================================================== */
+
+.about-tabs-wrapper {
+    margin-top: 2.5rem;
+}
+
+.about-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0;
+}
+
+.about-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition-smooth);
+    margin-bottom: -1px;
+}
+
+.about-tab:hover {
+    color: var(--text-main);
+}
+
+.about-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.about-tab-content {
+    display: none;
+}
+
+.about-tab-content.active {
+    display: block;
+}
+
+.link-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: var(--text-main);
+    backdrop-filter: blur(5px);
+    transition: var(--transition-smooth);
+}
+
+.link-pill:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.12);
+    color: var(--text-main);
+}
+
+.link-pill--linkedin {
+    border-color: rgba(0,119,181,0.5);
+    color: #0a95d1;
+}
+.link-pill--linkedin:hover {
+    background: rgba(0,119,181,0.15);
+    color: #0a95d1;
+}
+
+.link-pill--facebook {
+    border-color: rgba(24,119,242,0.5);
+    color: #4a9eff;
+}
+.link-pill--facebook:hover {
+    background: rgba(24,119,242,0.15);
+    color: #4a9eff;
+}
+
+.link-pill--instagram {
+    border-color: rgba(225,48,108,0.5);
+    color: #f77737;
+}
+.link-pill--instagram:hover {
+    background: rgba(225,48,108,0.1);
+    color: #f77737;
+}
+
+/* ==========================================================================
+   FEATURED WORK — SECTION TABS (Projects / Certificates)
+   ========================================================================== */
+
+.section-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0;
+}
+
+.section-tab {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: var(--transition-smooth);
+    margin-bottom: -1px;
+}
+
+.section-tab:hover {
+    color: var(--text-main);
+}
+
+.section-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.section-panel {
+    display: none;
+}
+
+.section-panel.active {
+    display: block;
+}
+
+/* ==========================================================================
+   PROJECT CARDS — GITHUB LINK
+   ========================================================================== */
+
+.project-actions {
+    margin-top: 1.2rem;
+}
+
+.btn-github {
+    background: rgba(255,255,255,0.05);
+    color: var(--text-main);
+    border: 1px solid rgba(255,255,255,0.15);
+    font-size: 0.85rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: var(--transition-smooth);
+}
+
+.btn-github:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   CERTIFICATE CARDS
+   ========================================================================== */
+
+.cert-card {
+    background: var(--bg-secondary);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent);
+    box-shadow: 0 10px 25px rgba(255,214,10,0.15);
+}
+
+.cert-icon {
+    height: 140px;
+    background: rgba(255,214,10,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: var(--accent);
+}
+
+.cert-info {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cert-info h3 {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.cert-issuer,
+.cert-date,
+.cert-credential {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.cert-credential span {
+    color: var(--accent-orange);
+    font-family: monospace;
+}
+
+.btn-cert {
+    margin-top: auto;
+    background: rgba(255,214,10,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(255,214,10,0.3);
+    font-size: 0.85rem;
+    padding: 0.55rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: var(--transition-smooth);
+    width: 100%;
+    justify-content: center;
+}
+
+.btn-cert:hover {
+    background: rgba(255,214,10,0.15);
+    color: var(--accent);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   CONTACT BUTTONS — moved out of inline styles
+   ========================================================================== */
+
+.btn-whatsapp {
+    background-color: #25d366;
+    border-color: #25d366;
+    color: #000;
+    font-weight: 600;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.btn-whatsapp:hover {
+    background-color: #1da851;
+    border-color: #1da851;
+    color: #000;
+    transform: translateY(-3px);
+}
+
+.btn-linkedin {
+    background-color: #0077b5;
+    border-color: #0077b5;
+    color: #fff;
+    font-weight: 600;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transition-smooth);
+}
+
+.btn-linkedin:hover {
+    background-color: #005f94;
+    border-color: #005f94;
+    color: #fff;
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   RESPONSIVE — TABS
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .about-tabs,
+    .section-tabs {
+        gap: 0;
+    }
+
+    .about-tab,
+    .section-tab {
+        flex: 1;
+        text-align: center;
+        font-size: 0.85rem;
+        padding: 0.6rem 0.5rem;
+    }
+
+    .link-pills {
+        justify-content: center;
+    }
+}
