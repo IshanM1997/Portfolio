@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Horizontal Carousel Arrow Scroll ---
+    // --- Horizontal Carousel — Arrow Scroll + Touch Swipe ---
     const updateArrowStates = (track, leftBtn, rightBtn) => {
         leftBtn.disabled  = track.scrollLeft <= 4;
         rightBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
@@ -146,14 +146,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const scrollAmount = () => {
             const card = track.querySelector('.project-card, .cert-card');
-            return card ? card.offsetWidth + 24 : 340;
+            return card ? card.offsetWidth + 24 : 300;
         };
 
         leftBtn.addEventListener('click',  () => track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
         rightBtn.addEventListener('click', () => track.scrollBy({ left:  scrollAmount(), behavior: 'smooth' }));
         track.addEventListener('scroll',   () => updateArrowStates(track, leftBtn, rightBtn));
-
         updateArrowStates(track, leftBtn, rightBtn);
+
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchStartScroll = 0;
+
+        track.addEventListener('touchstart', (e) => {
+            touchStartX      = e.touches[0].clientX;
+            touchStartScroll = track.scrollLeft;
+        }, { passive: true });
+
+        track.addEventListener('touchmove', (e) => {
+            const delta = touchStartX - e.touches[0].clientX;
+            track.scrollLeft = touchStartScroll + delta;
+        }, { passive: true });
+
+        track.addEventListener('touchend', (e) => {
+            const delta = touchStartX - e.changedTouches[0].clientX;
+            // Snap to nearest card if swipe was significant
+            if (Math.abs(delta) > 50) {
+                const amount = scrollAmount();
+                track.scrollBy({ left: delta > 0 ? amount : -amount, behavior: 'smooth' });
+            }
+            updateArrowStates(track, leftBtn, rightBtn);
+        }, { passive: true });
     });
 
     // --- Like Button ---
