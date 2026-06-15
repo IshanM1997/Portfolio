@@ -1,27 +1,25 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // --- Dynamic Circular Favicon Cropper ---
-    const originalImageSrc = 'my-profile.jpg'; // Your base profile image
+    const originalImageSrc = 'my-profile.png';
     const faviconElement = document.getElementById('favicon');
-    
+
     const img = new Image();
     img.src = originalImageSrc;
-    img.crossOrigin = 'anonymous'; 
-    
+    img.crossOrigin = 'anonymous';
+
     img.onload = () => {
         const canvas = document.createElement('canvas');
-        const size = 128; // High fidelity target output dimensions
+        const size = 128;
         canvas.width = size;
         canvas.height = size;
         const ctx = canvas.getContext('2d');
-        
-        // Render crisp circular mathematical clipping mask
+
         ctx.beginPath();
         ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
         ctx.closePath();
         ctx.clip();
-        
-        // Rectangular ratio correction logic (Center bounding square)
+
         let srcX = 0, srcY = 0, srcWidth = img.width, srcHeight = img.height;
         if (img.width > img.height) {
             srcWidth = img.height;
@@ -30,16 +28,15 @@ document.addEventListener('DOMContentLoaded', () => {
             srcHeight = img.width;
             srcY = (img.height - img.width) / 2;
         }
-        
-        // Project onto canvas layout grid and transform target source attribute
+
         ctx.drawImage(img, srcX, srcY, srcWidth, srcHeight, 0, 0, size, size);
-        faviconElement.href = canvas.toDataURL('image/png');
+        if (faviconElement) faviconElement.href = canvas.toDataURL('image/png');
     };
 
-// --- Mobile Navigation Menu Toggle ---
+    // --- Mobile Navigation Menu Toggle ---
     const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
+    const navMenu   = document.getElementById('nav-menu');
+    const navLinks  = document.querySelectorAll('.nav-link');
 
     const toggleMenu = () => {
         navMenu.classList.toggle('active');
@@ -55,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
     // --- Scroll-Driven Component Reveal System ---
     const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
 
@@ -63,42 +59,39 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('reveal-active');
-                observer.unobserve(entry.target); 
+                observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
-    });
+    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-    revealElements.forEach(element => revealObserver.observe(element));
+    revealElements.forEach(el => revealObserver.observe(el));
 
-
-    // --- Highlighting active navigation links based on scroll depth ---
+    // --- Active Navigation Link Highlighter ---
     const sections = document.querySelectorAll('section[id]');
 
     const activeLinkObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const currentId = entry.target.getAttribute('id');
-                
+                const id = entry.target.getAttribute('id');
                 navLinks.forEach(link => {
                     link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${currentId}`) {
-                        link.classList.add('active');
-                    }
+                    if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
                 });
             }
         });
-    }, {
-        rootMargin: "-30% 0px -70% 0px" 
-    });
+    }, { rootMargin: "-30% 0px -70% 0px" });
 
-    sections.forEach(section => activeLinkObserver.observe(section));
-});
+    sections.forEach(s => activeLinkObserver.observe(s));
+
     // --- About Section Tabs (Technical / Creative) ---
-    const aboutTabs = document.querySelectorAll('.about-tab');
+    const aboutTabs        = document.querySelectorAll('.about-tab');
     const aboutTabContents = document.querySelectorAll('.about-tab-content');
+    const roleBadge        = document.getElementById('about-role-badge');
+
+    const roleLabels = {
+        technical: 'Software Engineer',
+        creative:  'Photographer & Explorer'
+    };
 
     aboutTabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -113,11 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
             tab.classList.add('active');
             tab.setAttribute('aria-selected', 'true');
             document.getElementById(`tab-${target}`).classList.add('active');
+
+            if (roleBadge) roleBadge.textContent = roleLabels[target] || '';
         });
     });
 
     // --- Featured Work Tabs (Projects / Certificates) ---
-    const sectionTabs = document.querySelectorAll('.section-tab');
+    const sectionTabs   = document.querySelectorAll('.section-tab');
     const sectionPanels = document.querySelectorAll('.section-panel');
 
     sectionTabs.forEach(tab => {
@@ -135,3 +130,79 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById(targetId).classList.add('active');
         });
     });
+
+    // --- Horizontal Carousel Arrow Scroll ---
+    const updateArrowStates = (track, leftBtn, rightBtn) => {
+        leftBtn.disabled  = track.scrollLeft <= 4;
+        rightBtn.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+    };
+
+    document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+        const leftBtn  = wrapper.querySelector('.carousel-arrow--left');
+        const rightBtn = wrapper.querySelector('.carousel-arrow--right');
+        const track    = document.getElementById(leftBtn.getAttribute('data-target'));
+
+        if (!track) return;
+
+        const scrollAmount = () => {
+            const card = track.querySelector('.project-card, .cert-card');
+            return card ? card.offsetWidth + 24 : 340;
+        };
+
+        leftBtn.addEventListener('click',  () => track.scrollBy({ left: -scrollAmount(), behavior: 'smooth' }));
+        rightBtn.addEventListener('click', () => track.scrollBy({ left:  scrollAmount(), behavior: 'smooth' }));
+        track.addEventListener('scroll',   () => updateArrowStates(track, leftBtn, rightBtn));
+
+        updateArrowStates(track, leftBtn, rightBtn);
+    });
+
+    // --- Like Button ---
+    const likeBtn    = document.getElementById('like-btn');
+    const likeCount  = document.getElementById('like-count');
+    const likeThanks = document.getElementById('like-thanks');
+
+    let likes    = parseInt(localStorage.getItem('ishan_portfolio_likes') || '0');
+    let hasLiked = localStorage.getItem('ishan_portfolio_liked') === 'true';
+
+    if (likeCount) likeCount.textContent = likes;
+    if (hasLiked && likeBtn) likeBtn.classList.add('liked');
+
+    if (likeBtn) {
+        likeBtn.addEventListener('click', () => {
+            if (!hasLiked) {
+                likes++;
+                hasLiked = true;
+                localStorage.setItem('ishan_portfolio_likes', likes);
+                localStorage.setItem('ishan_portfolio_liked', 'true');
+
+                if (likeCount) likeCount.textContent = likes;
+                likeBtn.classList.add('liked');
+
+                if (likeThanks) {
+                    likeThanks.textContent = '🎉 Thanks for the like!';
+                    likeThanks.classList.add('visible');
+                    setTimeout(() => likeThanks.classList.remove('visible'), 3000);
+                }
+
+                // Open mail client to notify Ishan
+                window.location.href =
+                    'mailto:ishanmukherjee66@gmail.com' +
+                    '?subject=New%20Portfolio%20Like%20%F0%9F%92%96' +
+                    '&body=Hey%20Ishan!%0A%0ASomeone%20just%20liked%20your%20portfolio.%20%F0%9F%8E%89%0ATotal%20likes%3A%20' + likes;
+
+            } else {
+                // Already liked — replay the pop animation as feedback
+                likeBtn.classList.remove('liked');
+                void likeBtn.offsetWidth; // force reflow to restart animation
+                likeBtn.classList.add('liked');
+
+                if (likeThanks) {
+                    likeThanks.textContent = 'You already liked this 😊';
+                    likeThanks.classList.add('visible');
+                    setTimeout(() => likeThanks.classList.remove('visible'), 2500);
+                }
+            }
+        });
+    }
+
+}); // End DOMContentLoaded
