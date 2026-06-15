@@ -96,3 +96,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sections.forEach(section => activeLinkObserver.observe(section));
 });
+    // --- About Section Tabs (Technical / Creative) ---
+    const aboutTabs = document.querySelectorAll('.about-tab');
+    const aboutTabContents = document.querySelectorAll('.about-tab-content');
+
+    aboutTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-tab');
+
+            aboutTabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            aboutTabContents.forEach(c => c.classList.remove('active'));
+
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            document.getElementById(`tab-${target}`).classList.add('active');
+        });
+    });
+
+    // --- Featured Work Tabs (Projects / Certificates) ---
+    const sectionTabs = document.querySelectorAll('.section-tab');
+    const sectionPanels = document.querySelectorAll('.section-panel');
+
+    sectionTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetId = tab.getAttribute('data-section');
+
+            sectionTabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            sectionPanels.forEach(p => p.classList.remove('active'));
+
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            document.getElementById(targetId).classList.add('active');
+        });
+    });
