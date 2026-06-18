@@ -3,38 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Ishan Mukhopadhyay – Software Engineer building scalable, clean, and exceptional digital experiences with Java, Spring Boot, Angular, and more.">
+    <meta name="description" content="Ishan Mukhopadhyay – Software Engineer building scalable, clean, and exceptional digital experiences.">
     <title>Ishan's Portfolio</title>
     
-    <link rel="icon" type="image/png" sizes="32x32" href="my-profile.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="my-profile.png">
+    <link id="favicon" rel="icon" type="image/png" sizes="32x32" href="assets/logo/Logo.png">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
+    <div class="video-bg-container">
+        <video id="bg-video-element" autoplay loop muted playsinline src="./assets/videos/tech.mp4"></video>
+        <div class="video-overlay-shroud"></div>
+    </div>
+
     <header class="navbar-custom">
         <div class="nav-container">
             <a href="#about" class="logo">
-                <img src="logo.png" alt="Ishan" class="logo-img"> Ishan.dev</a>
-            <nav class="nav-menu" id="nav-menu">
-                <a href="#about" class="nav-link active" aria-label="Home">
-                    <i class="fas fa-home fs-5"></i>
-                </a>
-                <a href="#projects" class="nav-link" aria-label="Featured Work">
-                    <i class="fas fa-code fs-5"></i>
-                </a>
-                <a href="#experience" class="nav-link" aria-label="Professional Experience">
-                    <i class="fas fa-building fs-5"></i>
-                </a>
-                <a href="#contact" class="nav-link" aria-label="Get in Touch">
-                    <i class="fas fa-envelope fs-5"></i>
-                </a>
-            </nav>
-            
+                <img src="assets/logo/Logo.png" alt="Ishan" class="logo-img logo-img-circular">
+                <span class="logo-name ms-2">Ishan</span>
+            </a>
+            <nav class="nav-menu" id="nav-menu"></nav>
             <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
                 <i class="fas fa-bars"></i>
             </button>
@@ -45,392 +37,361 @@
         <section id="about" class="section about-section">
             <div class="container">
                 <div class="about-card reveal-up">
+                    <div class="about-card__content-stack">
+                        
+                        <div class="profile-header-block">
+                            <div class="about-avatar-wrap">
+                                <img src="./assets/images/DP.png" alt="Ishan Mukhopadhyay" class="about-avatar">
+                            </div>
+                            <h2 class="about-greeting">Hi I'm <span>Ishan Mukhopadhyay</span></h2>
+                            <h5 class="about-welcome">Welcome to my Portfolio Website.</h5>
+                            
+                            <div class="centered-badge-row">
+                                <span class="about-role-badge" id="about-role-badge">Software Engineer</span>
+                            </div>
+                            
+                            <div class="like-button-container">
+                                <button class="btn-like" id="like-btn" aria-label="Like this portfolio">
+                                    <i class="fas fa-heart like-icon"></i>
+                                    <span class="like-label">Like</span>
+                                    <span class="like-count" id="like-count">0</span>
+                                </button>
+                                <p class="like-thanks" id="like-thanks"></p>
+                            </div>
+                            <h8>If you like my work drop a <span class="heart-inline">❤</span> Like</h8>
 
-                    <div class="about-card__left">
-
-                        <div class="about-avatar-wrap">
-                            <img src="Firefly_Gemini Flash.png" alt="Ishan Mukhopadhyay" class="about-avatar">
+                            <div class="master-nav-tabs" role="tablist">
+                                <button class="master-nav-tab active" role="tab" aria-selected="true" data-workspace="technical-workspace">
+                                    <i class="fas fa-laptop-code me-2"></i>Technical
+                                </button>
+                                <button class="master-nav-tab" role="tab" aria-selected="false" data-workspace="creative-workspace">
+                                    <i class="fas fa-palette me-2"></i>Creative
+                                </button>
+                            </div>
                         </div>
 
-                        <h2 class="about-greeting">Hi I'm <span>Ishan Mukhopadhyay</span></h2>
+                        <div class="about-card__divider-horizontal"></div>
 
-                        <h5 class="about-welcome">Welcome to my Portfolio Website.<br>
-                            If you like my work drop a <span class="heart-inline">❤</span> Like</h5>
+                        <div class="workspace-content-area">
+                            <div class="about-tab-content active" id="tab-technical" role="tabpanel">
+                                <p class="about-bio">I am a passionate developer focused on writing clean, elegant, and efficient code. With a deep interest in software architecture and modern web technologies, I bridge the gap between complex backend logic and seamless frontend design.</p>
+                                <p class="about-bio">🚀 Java Full-Stack Engineer | Spring Boot & Angular | Currently upskilling in Data Engineering & Python 🐍</p>
 
-                        <span class="about-role-badge" id="about-role-badge">Software Engineer</span>
+                                <h4 class="skills-heading"></h4>
+                                <div class="skill-tiles">
+                                    <div class="skill-tile"><i class="devicon-java-plain colored skill-tile__icon"></i><span>Java</span></div>
+                                    <div class="skill-tile"><i class="devicon-spring-plain colored skill-tile__icon"></i><span>Spring Boot</span></div>
+                                    <div class="skill-tile"><i class="devicon-angularjs-plain colored skill-tile__icon"></i><span>Angular JS</span></div>
+                                    <div class="skill-tile"><i class="devicon-typescript-plain colored skill-tile__icon"></i><span>TypeScript</span></div>
+                                    <div class="skill-tile"><i class="devicon-python-plain colored skill-tile__icon"></i><span>Python</span></div>
+                                    <div class="skill-tile"><i class="devicon-sqldeveloper-plain colored skill-tile__icon"></i><span>SQL</span></div>
+                                    <div class="skill-tile"><i class="devicon-datadog-original colored skill-tile__icon"></i><span>Datadog</span></div>
+                                    <div class="skill-tile"><i class="devicon-html5-plain colored skill-tile__icon"></i><span>HTML5</span></div>
+                                    <div class="skill-tile"><i class="devicon-anaconda-original colored skill-tile__icon"></i><span>Anaconda</span></div>
+                                </div>
 
-                        <button class="btn-like" id="like-btn" aria-label="Like this portfolio">
-                            <i class="fas fa-heart like-icon"></i>
-                            <span class="like-label">Like</span>
-                            <span class="like-count" id="like-count">0</span>
-                        </button>
-                        <p class="like-thanks" id="like-thanks"></p>
+                                <div class="about-social mt-4">
+                                    <a href="https://github.com/IshanM1997" target="_blank" rel="noopener noreferrer" class="social-pill"><i class="fab fa-github"></i> GitHub</a>
+                                    <a href="https://www.linkedin.com/in/ishan-mukhopadhyay-7ab867123/" target="_blank" rel="noopener noreferrer" class="social-pill social-pill--linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                                    <a href="https://drive.google.com/file/d/1T8Dd-sF4ZMLOIpghRwhSzZ1O5fXrcFKv/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="social-pill"><i class="fas fa-file-alt"></i> Resume</a>
+                                </div>
+                            </div>
+
+                            <div class="about-tab-content" id="tab-creative" role="tabpanel">
+                                <p class="about-bio">Explorer · Adventurer · Foodie · I click at times. I observe and capture moments that become memories — photography is how I see the world differently.</p>
+                                <p class="about-bio">Advanced Adobe Photoshop Editor &middot; Nikon D5300 & Z6III &middot; HIPA Merit Award Winner &middot; Documentary &middot; Street &middot; Event &middot; Travel</p>
+
+                                <h4 class="skills-heading"></h4>
+                                <div class="skill-tiles">
+                                    <div class="skill-tile"><i class="fas fa-camera skill-tile__icon" style="color:#ffd60a;"></i><span>Street Photo</span></div>
+                                    <div class="skill-tile"><i class="fas fa-camera-retro skill-tile__icon" style="color:#ff8c00;"></i><span>Documentation</span></div>
+                                    <div class="skill-tile">
+                                        <svg class="skill-tile__icon" viewBox="0 0 50 50" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" rx="7" fill="#001e36"/><text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#31a8ff">Ps</text></svg>
+                                        <span>Photoshop</span>
+                                    </div>
+                                    <div class="skill-tile">
+                                        <svg class="skill-tile__icon" viewBox="0 0 50 50" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" rx="7" fill="#001a29"/><text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#aad6f8">Lr</text></svg>
+                                        <span>Lightroom</span>
+                                    </div>
+                                </div>
+
+                                <div class="about-social mt-4">
+                                    <a href="https://www.facebook.com/share/18hwwAx4qs/" target="_blank" rel="noopener noreferrer" class="social-pill social-pill--facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
+                                    <a href="https://www.instagram.com/ishan_mukherjee_1997" target="_blank" rel="noopener noreferrer" class="social-pill social-pill--instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
-
-                    <div class="about-card__divider"></div>
-
-                    <div class="about-card__right">
-
-                        <div class="about-tabs" role="tablist">
-                            <button class="about-tab active" role="tab" aria-selected="true" data-tab="technical">
-                                <i class="fas fa-laptop-code"></i> Technical Front
-                            </button>
-                            <button class="about-tab" role="tab" aria-selected="false" data-tab="creative">
-                                <i class="fas fa-camera"></i> Creative Front
-                            </button>
-                        </div>
-
-                        <div class="about-tab-content active" id="tab-technical" role="tabpanel">
-                            <p class="about-bio">I am a passionate developer focused on writing clean, elegant, and efficient code. With a deep interest in software architecture and modern web technologies, I bridge the gap between complex backend logic and seamless frontend design.</p>
-                            <p class="about-bio">🚀 Java Full-Stack Engineer | Spring Boot &amp; Angular | Currently upskilling in Data Engineering &amp; Python 🐍</p>
-
-                            <h4 class="skills-heading">My Skills</h4>
-                            <div class="skill-tiles">
-                                <div class="skill-tile">
-                                    <i class="devicon-python-plain skill-tile__icon" style="color:#3776ab;"></i>
-                                    <span>Python</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="devicon-sqldeveloper-plain skill-tile__icon" style="color:#336791;"></i>
-                                    <span>SQL</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="devicon-anaconda-original skill-tile__icon" style="color:#2496ed;"></i>
-                                    <span>Anaconda</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="devicon-datadog-original colored skill-tile__icon" style="color:#2496ed;"></i>
-                                    <span>DataDog</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="devicon-java-plain skill-tile__icon" style="color:#f89820;"></i>
-                                    <span>Java</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="devicon-spring-plain skill-tile__icon" style="color:#6db33f;"></i>
-                                    <span>Spring Boot</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="devicon-angularjs-plain skill-tile__icon" style="color:#dd0031;"></i>
-                                    <span>Angular JS</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="devicon-typescript-plain skill-tile__icon" style="color:#3178c6;"></i>
-                                    <span>TypeScript</span>
-                                </div>                                
-                                <div class="skill-tile">
-                                    <i class="devicon-html5-plain skill-tile__icon" style="color:#e34f26;"></i>
-                                    <span>HTML5</span>
-                                </div>
-                            </div>
-
-                            <div class="about-social mt-3">
-                                <a href="https://github.com/IshanM1997" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-pill">
-                                    <i class="fab fa-github"></i> GitHub
-                                </a>
-                                <a href="https://www.linkedin.com/in/ishan-mukhopadhyay-7ab867123/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-pill social-pill--linkedin">
-                                    <i class="fab fa-linkedin-in"></i> LinkedIn
-                                </a>
-                                <a href="https://drive.google.com/file/d/1T8Dd-sF4ZMLOIpghRwhSzZ1O5fXrcFKv/view?usp=sharing" target="_blank" rel="noopener noreferrer" aria-label="Resume" class="social-pill">
-                                    <i class="fas fa-file-alt"></i> Resume
-                                </a>
-                            </div>
-                        </div>
-
-                        <div class="about-tab-content" id="tab-creative" role="tabpanel">
-                            <p class="about-bio">Explorer · Adventurer · Foodie · I click at times. I observe and capture moments that become memories — photography is how I see the world differently.</p>
-                            <p class="about-bio">Advanced Adobe Photoshop Editor &nbsp;·&nbsp; Nikon D5300 & Z6III &nbsp;·&nbsp; HIPA Merit Award Winner &nbsp;·&nbsp; Documentary · Street · Event · Travel</p>
-
-                            <h4 class="skills-heading">My Skills</h4>
-                            <div class="skill-tiles">
-                                <div class="skill-tile">
-                                    <i class="fas fa-camera skill-tile__icon" style="color:#ffd60a;"></i>
-                                    <span>Street Photo</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <i class="fas fa-camera-retro skill-tile__icon" style="color:#ff8c00;"></i>
-                                    <span>Documentation</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <svg class="skill-tile__icon" viewBox="0 0 50 50" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <rect width="50" height="50" rx="7" fill="#001e36"/>
-                                        <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#31a8ff">Ps</text>
-                                    </svg>
-                                    <span>Photoshop</span>
-                                </div>
-                                <div class="skill-tile">
-                                    <svg class="skill-tile__icon" viewBox="0 0 50 50" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <rect width="50" height="50" rx="7" fill="#001a29"/>
-                                        <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" font-weight="700" fill="#aad6f8">Lr</text>
-                                    </svg>
-                                    <span>Lightroom</span>
-                                </div>
-                            </div>
-
-                            <div class="about-social mt-3">
-                                <a href="https://www.facebook.com/share/18hwwAx4qs/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-pill social-pill--facebook">
-                                    <i class="fab fa-facebook-f"></i> Facebook
-                                </a>
-                                <a href="https://www.instagram.com/ishan_mukherjee_1997?igsh=cXViOWt3NnFvY2dh" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-pill social-pill--instagram">
-                                    <i class="fab fa-instagram"></i> Instagram
-                                </a>
-                            </div>
-                        </div>
-
-                    </div></div></div>
-        </section>
-
-
-        <section id="projects" class="section projects-section">
-            <div class="container">
-                <h2 class="section-title reveal-up">Works and Achievements</h2>
-
-                <div class="section-tabs reveal-up" role="tablist">
-                    <button class="section-tab active" role="tab" aria-selected="true" data-section="projects-panel">
-                        <i class="fas fa-code me-2"></i>Projects
-                    </button>
-                    <button class="section-tab" role="tab" aria-selected="false" data-section="certs-panel">
-                        <i class="fas fa-certificate me-2"></i>Certificates
-                    </button>
                 </div>
-
-                <div class="section-panel active" id="projects-panel" role="tabpanel">
-                    <div class="carousel-wrapper">
-                        <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-target="projects-track">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div class="carousel-track" id="projects-track">
-                            <div class="p-3 text-muted">Loading fresh repositories from GitHub...</div>
-                        </div>
-                        <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-target="projects-track">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="section-panel" id="certs-panel" role="tabpanel">
-                    <div class="carousel-wrapper">
-                        <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-target="certs-track">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <div class="carousel-track" id="certs-track">
-
-                            <div class="cert-card">
-                                <div class="cert-info">
-                                    <h3>Up & Running with ServiceNow</h3>
-                                    <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
-                                    <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: June 2024</p>
-                                    <p class="cert-credential"><i class="fas fa-id-badge me-1"></i>Certificate ID: <span>05c23448-0d06-48fd-8afa-46e160275be0</span></p>
-                                    <div class="project-actions">
-                                        <a href="https://www.udemy.com/certificate/UC-05c23448-0d06-48fd-8afa-46e160275be0/" target="_blank" rel="noopener noreferrer" class="btn btn-cert">
-                                            <i class="fas fa-external-link-alt me-2"></i>View Certificate
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="cert-card">
-                                <div class="cert-info">
-                                    <h3>ChatGPT: Complete ChatGPT Course For Work 2026 (Ethically)!</h3>
-                                    <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
-                                    <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: January 2024</p>
-                                    <p class="cert-credential"><i class="fas fa-id-badge me-1"></i>Certificate ID: <span>UC-0357680a-d5bf-4c6a-88b6-6254f47fb432</span></p>
-                                    <div class="project-actions">
-                                        <a href="https://udemy.com/certificate/UC-0357680a-d5bf-4c6a-88b6-6254f47fb432/" target="_blank" rel="noopener noreferrer" class="btn btn-cert">
-                                            <i class="fas fa-external-link-alt me-2"></i>View Certificate
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="cert-card">
-                                <div class="cert-info">
-                                    <h3>Java Design Patterns & SOLID Design Principles</h3>
-                                    <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
-                                    <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: June 2026</p>
-                                    <p class="cert-credential"><i class="fas fa-id-badge me-1"></i>Certificate ID: <span>UC-a1e29c09-8ea2-4271-b5a2-556bfd7158fd</span></p>
-                                    <div class="project-actions">
-                                        <a href="https://udemy.com/certificate/UC-a1e29c09-8ea2-4271-b5a2-556bfd7158fd/" target="_blank" rel="noopener noreferrer" class="btn btn-cert">
-                                            <i class="fas fa-external-link-alt me-2"></i>View Certificate
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="cert-card">
-                                <div class="cert-info">
-                                    <h3>Microsoft Azure DevOps :Automate App Deployment From Scratch
-                                    </h3>
-                                    <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
-                                    <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: July 2025</p>
-                                    <p class="cert-credential"><i class="fas fa-id-badge me-1"></i>Certificate ID: <span>UC-8f1dc129-e2e6-4d29-a30d-3c40255a38d1</span></p>
-                                    <div class="project-actions">
-                                        <a href="https://cognizant.udemy.com/certificate/UC-8f1dc129-e2e6-4d29-a30d-3c40255a38d1/" target="_blank" rel="noopener noreferrer" class="btn btn-cert">
-                                            <i class="fas fa-external-link-alt me-2"></i>View Certificate
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="cert-card">
-                                <div class="cert-info">
-                                    <h3>Azure DevOps Fundamentals for Beginners
-                                    </h3>
-                                    <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
-                                    <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: July 2025</p>
-                                    <p class="cert-credential"><i class="fas fa-id-badge me-1"></i>Certificate ID: <span>UC-28280004-d888-450b-ab87-c2d10fadacbc</span></p>
-                                    <div class="project-actions">
-                                        <a href="https://udemy.com/certificate/UC-28280004-d888-450b-ab87-c2d10fadacbc/" target="_blank" rel="noopener noreferrer" class="btn btn-cert">
-                                            <i class="fas fa-external-link-alt me-2"></i>View Certificate
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-target="certs-track">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-
             </div>
         </section>
 
-        <section id="experience" class="section projects-section">
-            <div class="container">
-                <h2 class="section-title reveal-up">Professional Experience</h2>
+        <div id="technical-modules-wrapper">
+            <section id="tech-works" class="section">
+                <div class="container">
+                    <h3 class="section-title reveal-up">Works and Achievements</h3>
+                    
+                    <div class="nested-sub-tabs reveal-up" role="tablist">
+                        <button class="nested-tab active" data-sub-target="tech-projects-panel" role="tab" aria-selected="true">Projects</button>
+                        <button class="nested-tab" data-sub-target="tech-certs-panel" role="tab" aria-selected="false">Certificates</button>
+                    </div>
 
-                <div class="section-tabs reveal-up" role="tablist">
-                    <button class="section-tab active" role="tab" aria-selected="true" aria-controls="cognizant-panel" data-section="cognizant-panel">
-                        <i class="fas fa-code me-2"></i>Cognizant Technology Solutions
-                    </button>
-                    <button class="section-tab" role="tab" aria-selected="false" aria-controls="ey-panel" data-section="ey-panel">
-                        <i class="fas fa-building me-2"></i>EY GDS
-                    </button>
-                </div>
-
-                <div class="section-panel active" id="cognizant-panel" role="tabpanel">
-                    <div class="project-grid">                        
-                        <div class="project-card">
-                            <div class="project-info">
-                                <div class="project-meta">
-                                    <span class="project-date"><i class="far fa-calendar-alt me-1"></i> Feb 2024 - Present</span>
-                                    <span class="project-location"><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span>
+                    <div class="nested-panel active" id="tech-projects-panel" role="tabpanel">
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="github-track"><i class="fas fa-chevron-left"></i></button>
+                            <div class="carousel-container">
+                                <div class="carousel-track" id="github-track">
+                                    <div class="p-3 text-muted">Fetching components from GitHub...</div>
                                 </div>
+                            </div>
+                            <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="github-track"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="nested-panel" id="tech-certs-panel" role="tabpanel">
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="tech-certs-track"><i class="fas fa-chevron-left"></i></button>
+                            <div class="carousel-container">
+                                <div class="carousel-track" id="tech-certs-track">
+                                    
+                                    <div class="carousel-item-card">
+                                        <div>
+                                            <h5 class="project-title">Up & Running with ServiceNow</h5>
+                                            <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
+                                            <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>June 2024</p>
+                                        </div>
+                                        <a href="https://www.udemy.com/certificate/UC-05c23448-0d06-48fd-8afa-46e160275be0/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
+                                    </div>
+
+                                    <div class="carousel-item-card">
+                                        <div>
+                                            <h5 class="project-title">Java Design Patterns & SOLID Principles</h5>
+                                            <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
+                                            <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>June 2026</p>
+                                        </div>
+                                        <a href="https://udemy.com/certificate/UC-a1e29c09-8ea2-4271-b5a2-556bfd7158fd/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
+                                    </div>
+
+                                    <div class="carousel-item-card">
+                                        <div>
+                                            <h5 class="project-title">Azure DevOps Fundamentals for Beginners</h5>
+                                            <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
+                                            <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>July 2025</p>
+                                        </div>
+                                        <a href="https://udemy.com/certificate/UC-28280004-d888-450b-ab87-c2d10fadacbc/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
+                                    </div>                                    
+                                    <div class="carousel-item-card">
+                                        <div>
+                                            <h5 class="project-title">ChatGPT: Complete ChatGPT Course For Work 2026 (Ethically)!</h5>
+                                            <p class="cert-issuer"><i class="fas fa-building me-1"></i>Udemy</p>
+                                            <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>July 2025</p>
+                                        </div>
+                                        <a href="https://udemy.com/certificate/UC-0357680a-d5bf-4c6a-88b6-6254f47fb432/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="tech-certs-track"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tech-experience" class="section">
+                <div class="container">
+                    <h3 class="section-title reveal-up">Professional Experience</h3>
+                    
+                    <div class="logo-sub-tabs reveal-up" role="tablist">
+                        <button class="logo-tab active" data-brand-target="brand-cognizant" role="tab" aria-selected="true" aria-label="Cognizant Experience">
+                            <img src="./assets/logo/cognizant.png" alt="Cognizant" class="corporate-tab-logo" onerror="this.outerHTML='Cognizant'">
+                        </button>
+                        <button class="logo-tab" data-brand-target="brand-ey" role="tab" aria-selected="false" aria-label="EY Experience">
+                            <img src="./assets/logo/EY.jpg" alt="EY" class="corporate-tab-logo" onerror="this.outerHTML='EY GDS'">
+                        </button>
+                    </div>
+
+                    <div class="brand-panel active" id="brand-cognizant" role="tabpanel">
+                        <div class="project-grid">
+                            <div class="project-card">
+                                <div class="project-meta"><span><i class="far fa-calendar-alt me-1"></i> Feb 2024 - Present</span><span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span></div>
                                 <h2>Fullstack Java Developer</h2>
                                 <h5>TD Insurance</h5>
-                                <p>Led architecture and development of Angular 17+/Spring Boot platforms, boosting operational efficiency by 50% and driving major gains in team productivity, security compliance, and observability.</p>
-                                <div class="project-tech">
-                                    <span class="tech-tag">Angular 17+</span>
-                                    <span class="tech-tag">Spring Boot</span>
-                                    <span class="tech-tag">Datadog</span>
-                                    <span class="tech-tag">Splunk</span>
-                                </div>
+                                <p>Led architecture and engineering cycles using Angular 17+ and Spring Boot microservices, boosting operational framework security compliance and data monitoring throughput.</p>
+                                <div class="project-tech"><span class="tech-tag">Angular 17+</span><span class="tech-tag">Spring Boot</span><span class="tech-tag">Datadog</span></div>
                             </div>
-                        </div>
-
-                        <div class="project-card">
-                            <div class="project-info">
-                                <div class="project-meta">
-                                    <span class="project-date"><i class="far fa-calendar-alt me-1"></i> June 2022 - Jan 2024</span>
-                                    <span class="project-location"><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span>
-                                </div>
+                            <div class="project-card">
+                                <div class="project-meta"><span><i class="far fa-calendar-alt me-1"></i> Feb 2022 - Jan2024</span><span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span></div>
                                 <h2>Java Developer</h2>
                                 <h5>RBC Insurance</h5>
-                                <p>Worked as a Software Engineer to develop and maintain insurance-related applications using Angular and Spring Boot.</p>
-                                <div class="project-tech">
-                                    <span class="tech-tag">Microservices</span>
-                                    <span class="tech-tag">Spring Boot</span>
-                                    <span class="tech-tag">Java</span>
-                                    <span class="tech-tag">REST APIs</span>
-                                </div>
+                                <p>Led architecture and engineering cycles using Java17+ and Spring Boot microservices, boosting operational framework security compliance and data monitoring throughput.</p>
+                                <div class="project-tech"><span class="tech-tag">Java 17+</span><span class="tech-tag">Spring Boot</span><span class="tech-tag">Datadog</span></div>
                             </div>
                         </div>
-
                     </div>
-                </div>
 
-                <div class="section-panel" id="ey-panel" role="tabpanel">
-                    <div class="project-grid">
-                        
-                        <div class="project-card">
-                            <div class="project-info">
-                                <div class="project-meta">
-                                    <span class="project-date"><i class="far fa-calendar-alt me-1"></i> Sept 2021 - Nov 2021</span>
-                                    <span class="project-location"><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span>
-                                </div>
+                    <div class="brand-panel" id="brand-ey" role="tabpanel">
+                        <div class="project-grid">
+                            <div class="project-card">
+                                <div class="project-meta"><span><i class="far fa-calendar-alt me-1"></i> Sept 2021 - Nov 2021</span><span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span></div>
                                 <h2>Data Engineer Intern</h2>
-                                <h5>Cambridge Institute</h5>
-                                <p>Designed star-schema data models and optimised Oracle SQL stored procedures, cutting report generation time by ~40%. Performed exploratory analysis on 1M+ row datasets, surfacing revenue-trend insights for senior stakeholders.</p>
-                                <div class="project-tech">
-                                    <span class="tech-tag">Oracle SQL</span>
-                                    <span class="tech-tag">Data Modeling</span>
-                                    <span class="tech-tag">Alteryx</span>
-                                    <span class="tech-tag">Python</span>
-                                </div>
+                                <h5>EY GDS Hub</h5>
+                                <p>Designed architectural data warehouse pipelines utilizing star-schema modeling patterns and query optimization routines, cutting pipeline processing lag by 40%.</p>
+                                <div class="project-tech"><span class="tech-tag">Oracle SQL</span><span class="tech-tag">Data Modeling</span><span class="tech-tag">Python</span></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
+            </section>
 
-            </div>
-        </section>
-
-
-        <section id="contact" class="section contact-section">
-            <div class="container">
-                <h2 class="section-title reveal-up">Say Hello</h2>
-                
-                <div class="row g-4 justify-content-center mt-2">
-                
-                    <div class="col-md-4">
-                        <div class="contact-box reveal-up h-100 d-flex flex-column justify-content-between">
-                            <div>
-                                <h3>Email Me</h3>
-                                <p>Have an interesting project or a formal role that matches my skillset? Let's connect via mail.</p>
-                            </div>
-                            <a href="mailto:ishanmukherjee66@gmail.com?subject=Project%20Inquiry%20-%20Portfolio&body=Hi%20Ishan,%20I%20saw%20your%20portfolio%20and%20wanted%20to%20reach%20out..." class="btn btn-primary mt-3 w-100">
-                                <i class="fas fa-envelope me-2"></i>Let's Collaborate
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="contact-box reveal-up h-100 d-flex flex-column justify-content-between">
-                            <div>
-                                <h3>WhatsApp</h3>
-                                <p>Looking for a quick chat, immediate freelance discussions, or real-time project updates?</p>
-                            </div>
-                            <a href="https://wa.me/8697128399" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp mt-3 w-100">
-                                <i class="fab fa-whatsapp me-2"></i>+91 86971 28399
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="contact-box reveal-up h-100 d-flex flex-column justify-content-between">
-                            <div>
-                                <h3>LinkedIn</h3>
-                                <p>Let's grow our professional network, exchange engineering ideas, or review open career positions.</p>
-                            </div>
-                            <a href="https://www.linkedin.com/in/ishan-mukhopadhyay-7ab867123/" target="_blank" rel="noopener noreferrer" class="btn btn-linkedin mt-3 w-100">
-                                <i class="fab fa-linkedin-in me-2"></i>View Profile
-                            </a>
-                        </div>
-                    </div>
+            <section id="tech-education" class="section">
+                <div class="container">
+                    <h3 class="section-title reveal-up">Education</h3>
                     
+                    <div class="nested-sub-tabs reveal-up" role="tablist">
+                        <button class="nested-tab active" data-sub-target="edu-panel-1" role="tab" aria-selected="true">Post Graduation</button>
+                        <button class="nested-tab" data-sub-target="edu-panel-2" role="tab" aria-selected="false">Graduation</button>
+                        <button class="nested-tab" data-sub-target="edu-panel-3" role="tab" aria-selected="false">Higher Secondary</button>
+                        <button class="nested-tab" data-sub-target="edu-panel-4" role="tab" aria-selected="false">Secondary</button>
+                    </div>
+
+                    <div class="nested-panel active" id="edu-panel-1" role="tabpanel">
+                        <div class="project-card"><h4>Master of Technology (M.Tech)</h4>
+                            <p >
+                                <a href="https://www.nit.ac.in/" target="_blank" rel="noopener noreferrer">Narula Institute of Technology</a><br>
+                                 <a> 
+                                    <span>
+                                        Department of Electronics & Communication Engineering<br>
+                                        2020 - 2022<br>
+                                        CGPA: 9.30
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="nested-panel" id="edu-panel-2" role="tabpanel">
+                        <div class="project-card"><h4>Bachelor of Technology (B.Tech)</h4>
+                            <p >
+                                <a href="https://www.surtech.edu.in/" target="_blank" rel="noopener noreferrer">Dr.Sudhir Chandra Sur Degree Engineering College</a><br>
+                                 <a> 
+                                    <span>
+                                        Department of Electronics & Communication Engineering<br>
+                                        2016 - 2020<br>
+                                        CGPA: 7.40
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="nested-panel" id="edu-panel-3" role="tabpanel">
+                        <div class="project-card"><h4>Senior Secondary Schooling(12th) CBSE</h4>
+                            <p >
+                                <a href="https://dumdumigmhs.org/" target="_blank" rel="noopener noreferrer">Indira Gandhi Memorial High School,DumDum</a><br>
+                                 <a> 
+                                    <span>
+                                        Department of Science<br>
+                                        2014 - 2016<br>
+                                        Percentage: 69.60%
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="nested-panel" id="edu-panel-4" role="tabpanel">
+                        <div class="project-card"><h4>High School Education Council(10th) ICSE</h4>
+                            <p >
+                                <a href="https://ststephensschool.edu.in/" target="_blank" rel="noopener noreferrer">St.Stephen's School,DumDum</a><br>
+                                 <a> 
+                                    <span>
+                                        Department of Science<br>
+                                        2013 - 2014<br>
+                                        Percentage: 79.80%
+                                    </span>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="creative-modules-wrapper" style="display: none;">
+
+                        <section id="creative-achievements" class="section">
+                <div class="container">
+                    <h3 class="section-title reveal-up">Achievements</h3>
+                    
+                    <div class="carousel-wrapper">
+                        <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="creative-certs-track"><i class="fas fa-chevron-left"></i></button>
+                        <div class="carousel-container">
+                            <div class="carousel-track" id="creative-certs-track">
+                                
+                                <div class="carousel-item-card">
+                                    <div>
+                                        <h5 class="project-title">HIPA International Photography Award</h5>
+                                        <p class="cert-issuer"><i class="fas fa-award me-1"></i>HIPA Board</p>
+                                        <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: 2024</p>
+                                    </div>
+                                    <span class="btn-cert">Merit Accomplishment</span>
+                                </div>
+
+                                <div class="carousel-item-card">
+                                    <div>
+                                        <h5 class="project-title">Documentary & Visual Storytelling</h5>
+                                        <p class="cert-issuer"><i class="fas fa-building me-1"></i>Nikon Academy</p>
+                                        <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: November 2023</p>
+                                    </div>
+                                    <span class="btn-cert">Creative Accomplishment</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="creative-certs-track"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section id="creative-works" class="section">
+                <div class="container">
+                    <h3 class="section-title reveal-up">My Works</h3>
+                    <div class="instagram-grid-container" id="instagram-stream-target">
+                        <div class="p-3 text-muted">Connecting to Instagram channel stream...</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section id="contact" class="section hello-deck-section">
+            <div class="container">
+                <h2 class="section-title text-center mb-5 reveal-up"></h2>
+                <div class="hello-deck reveal-up">
+                    <div class="hello-deck-item">
+                        <a href="mailto:ishanmukherjee66@gmail.com" class="hello-deck-icon icon-email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        <div class="hello-side-popup"><h6>Drop me a mail if you have any proposals or collaborations in mind.</h6></div>
+                    </div>
+                    <div class="hello-deck-item">
+                        <a href="https://www.linkedin.com/in/ishan-mukhopadhyay-7ab867123/" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <div class="hello-side-popup"><h6>Connect with me on LinkedIn for professional updates.</h6></div>
+                    </div>
+                    <div class="hello-deck-item">
+                        <a href="https://wa.me/8697128399" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <div class="hello-side-popup"><h6>Direct real-time communication on WhatsApp.</h6></div>
+                    </div>
+                    <div class="hello-deck-item">
+                        <a href="https://maps.google.com/?q=Kolkata" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-map" aria-label="Google Map Location"><i class="fas fa-map-marked-alt"></i></a>
+                        <div class="hello-side-popup"><h6>If you're in Kolkata, let's meet up!</h6></div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Ishan's Portfolio. All rights reserved.</p>
+        <p>© 2026 Ishan's Portfolio. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="./static/script.js"></script>
 </body>
 </html>
