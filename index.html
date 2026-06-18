@@ -42,12 +42,10 @@
     </header>
 
     <main>
-        <!-- ===================== ABOUT ===================== -->
         <section id="about" class="section about-section">
             <div class="container">
                 <div class="about-card reveal-up">
 
-                    <!-- ══ LEFT COLUMN ══ -->
                     <div class="about-card__left">
 
                         <div class="about-avatar-wrap">
@@ -61,7 +59,6 @@
 
                         <span class="about-role-badge" id="about-role-badge">Software Engineer</span>
 
-                        <!-- Like button -->
                         <button class="btn-like" id="like-btn" aria-label="Like this portfolio">
                             <i class="fas fa-heart like-icon"></i>
                             <span class="like-label">Like</span>
@@ -71,13 +68,10 @@
 
                     </div>
 
-                    <!-- ══ DIVIDER ══ -->
                     <div class="about-card__divider"></div>
 
-                    <!-- ══ RIGHT COLUMN ══ -->
                     <div class="about-card__right">
 
-                        <!-- TABS at the very top -->
                         <div class="about-tabs" role="tablist">
                             <button class="about-tab active" role="tab" aria-selected="true" data-tab="technical">
                                 <i class="fas fa-laptop-code"></i> Technical Front
@@ -87,7 +81,6 @@
                             </button>
                         </div>
 
-                        <!-- ── TECHNICAL TAB ── -->
                         <div class="about-tab-content active" id="tab-technical" role="tabpanel">
                             <p class="about-bio">I am a passionate developer focused on writing clean, elegant, and efficient code. With a deep interest in software architecture and modern web technologies, I bridge the gap between complex backend logic and seamless frontend design.</p>
                             <p class="about-bio">🚀 Java Full-Stack Engineer | Spring Boot &amp; Angular | Currently upskilling in Data Engineering &amp; Python 🐍</p>
@@ -132,7 +125,6 @@
                                 </div>
                             </div>
 
-                            <!-- Technical social links under skills -->
                             <div class="about-social mt-3">
                                 <a href="https://github.com/IshanM1997" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-pill">
                                     <i class="fab fa-github"></i> GitHub
@@ -146,7 +138,6 @@
                             </div>
                         </div>
 
-                        <!-- ── CREATIVE TAB ── -->
                         <div class="about-tab-content" id="tab-creative" role="tabpanel">
                             <p class="about-bio">Explorer · Adventurer · Foodie · I click at times. I observe and capture moments that become memories — photography is how I see the world differently.</p>
                             <p class="about-bio">Advanced Adobe Photoshop Editor &nbsp;·&nbsp; Nikon D5300 & Z6III &nbsp;·&nbsp; HIPA Merit Award Winner &nbsp;·&nbsp; Documentary · Street · Event · Travel</p>
@@ -161,7 +152,6 @@
                                     <i class="fas fa-camera-retro skill-tile__icon" style="color:#ff8c00;"></i>
                                     <span>Documentation</span>
                                 </div>
-                                <!-- Photoshop — inline SVG Ps lettermark (no paid icon needed) -->
                                 <div class="skill-tile">
                                     <svg class="skill-tile__icon" viewBox="0 0 50 50" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <rect width="50" height="50" rx="7" fill="#001e36"/>
@@ -169,7 +159,6 @@
                                     </svg>
                                     <span>Photoshop</span>
                                 </div>
-                                <!-- Lightroom — inline SVG Lr lettermark -->
                                 <div class="skill-tile">
                                     <svg class="skill-tile__icon" viewBox="0 0 50 50" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <rect width="50" height="50" rx="7" fill="#001a29"/>
@@ -179,7 +168,6 @@
                                 </div>
                             </div>
 
-                            <!-- Creative social links under skills -->
                             <div class="about-social mt-3">
                                 <a href="https://www.facebook.com/share/18hwwAx4qs/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-pill social-pill--facebook">
                                     <i class="fab fa-facebook-f"></i> Facebook
@@ -190,18 +178,14 @@
                             </div>
                         </div>
 
-                    </div><!-- end right -->
-                </div><!-- end about-card -->
-            </div>
+                    </div></div></div>
         </section>
 
 
-                <!-- ===================== FEATURED WORK ===================== -->
         <section id="projects" class="section projects-section">
             <div class="container">
-                <h2 class="section-title reveal-up">Works and Achivements</h2>
+                <h2 class="section-title reveal-up">Works and Achievements</h2>
 
-                <!-- Section Tabs -->
                 <div class="section-tabs reveal-up" role="tablist">
                     <button class="section-tab active" role="tab" aria-selected="true" data-section="projects-panel">
                         <i class="fas fa-code me-2"></i>Projects
@@ -211,85 +195,13 @@
                     </button>
                 </div>
 
-                <!-- Projects Panel -->
                 <div class="section-panel active" id="projects-panel" role="tabpanel">
                     <div class="carousel-wrapper">
                         <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-target="projects-track">
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <div class="carousel-track" id="projects-track">
-                            <div class="project-card">
-                                <div class="project-info">
-                                    <h3>Forecaster</h3>
-                                    <p>A real-time weather forecasting app that provides 5 days of future forecast.</p>
-                                    <div class="project-tags">
-                                        <span>Angular</span>
-                                        <span>HTML</span>
-                                        <span>TypeScript</span>
-                                        <span>CSS</span>
-                                    </div>
-                                    <div class="project-actions">
-                                        <a href="https://github.com/IshanM1997/Weather-forecast-app" target="_blank" rel="noopener noreferrer" class="btn btn-github">
-                                            <i class="fab fa-github me-2"></i>View on GitHub
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="project-card">
-                                <div class="project-info">
-                                    <h3>ShopSphere</h3>
-                                    <p>A production-ready e-commerce application with Angular 17 frontend, Spring Boot 3 backend, and MySQL database. Integrates the free FakeStoreAPI to auto-populate products.</p>
-                                    <div class="project-tags">
-                                        <span>Angular</span>
-                                        <span>Spring Boot</span>
-                                        <span>Java</span>
-                                        <span>JWT</span>
-                                        <span>MySQL 8</span>
-                                    </div>
-                                    <div class="project-actions">
-                                        <a href="https://github.com/IshanM1997/E-commerce-website.git" target="_blank" rel="noopener noreferrer" class="btn btn-github">
-                                            <i class="fab fa-github me-2"></i>View on GitHub
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="project-card">
-                                <div class="project-info">
-                                    <h3>Dashboard Creator</h3>
-                                    <p>A dynamic, auto-refreshing dashboard that reads multiple Excel files and visualises them as interactive charts and tables. Changes to an Excel file reflect in the browser within seconds.</p>
-                                    <div class="project-tags">
-                                        <span>Angular</span>
-                                        <span>Python</span>
-                                        <span>pandas</span>
-                                        <span>Excel</span>
-                                    </div>
-                                    <div class="project-actions">
-                                        <a href="https://github.com/IshanM1997/Dashboard-Creator.git" target="_blank" rel="noopener noreferrer" class="btn btn-github">
-                                            <i class="fab fa-github me-2"></i>View on GitHub
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="project-card">
-                                <div class="project-info">
-                                    <h3>FileForge — File Converter &amp; Merger</h3>
-                                    <p>A full-stack file conversion and merging tool. Stack: Python (Flask) backend · Angular 17 frontend · Bootstrap 5.</p>
-                                    <div class="project-tags">
-                                        <span>Angular 17</span>
-                                        <span>Python</span>
-                                        <span>Flask</span>
-                                        <span>Bootstrap</span>
-                                    </div>
-                                    <div class="project-actions">
-                                        <a href="https://github.com/IshanM1997/File-Converter.git" target="_blank" rel="noopener noreferrer" class="btn btn-github">
-                                            <i class="fab fa-github me-2"></i>View on GitHub
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="p-3 text-muted">Loading fresh repositories from GitHub...</div>
                         </div>
                         <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-target="projects-track">
                             <i class="fas fa-chevron-right"></i>
@@ -297,7 +209,6 @@
                     </div>
                 </div>
 
-                <!-- Certificates Panel -->
                 <div class="section-panel" id="certs-panel" role="tabpanel">
                     <div class="carousel-wrapper">
                         <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-target="certs-track">
@@ -406,7 +317,7 @@
                             <div class="project-info">
                                 <div class="project-meta">
                                     <span class="project-date"><i class="far fa-calendar-alt me-1"></i> Feb 2024 - Present</span>
-                                    <span class="project-location"><i class="fas fa-map-marker-alt me-1"></i> Kolkata,India</span>
+                                    <span class="project-location"><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span>
                                 </div>
                                 <h2>Fullstack Java Developer</h2>
                                 <h5>TD Insurance</h5>
@@ -469,7 +380,6 @@
         </section>
 
 
-        <!-- ===================== CONTACT ===================== -->
         <section id="contact" class="section contact-section">
             <div class="container">
                 <h2 class="section-title reveal-up">Say Hello</h2>
