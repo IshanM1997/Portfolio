@@ -15,8 +15,9 @@
 </head>
 <body>
 
-    <div class="video-bg-container">
-        <video id="bg-video-element" autoplay loop muted playsinline src="./assets/videos/tech.mp4"></video>
+    <!-- DYNAMIC IMAGE BACKGROUND STRUCTURE -->
+    <div class="image-bg-container">
+        <div id="bg-image-element"></div>
         <div class="video-overlay-shroud"></div>
     </div>
 
@@ -24,7 +25,7 @@
         <div class="nav-container">
             <a href="#about" class="logo">
                 <img src="assets/logo/Logo.png" alt="Ishan" class="logo-img logo-img-circular">
-                <span class="logo-name ms-2">Ishan</span>
+                <span class="logo-name ms-2"></span>
             </a>
             <nav class="nav-menu" id="nav-menu"></nav>
             <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
@@ -74,8 +75,8 @@
 
                         <div class="workspace-content-area">
                             <div class="about-tab-content active" id="tab-technical" role="tabpanel">
-                                <p class="about-bio">I am a passionate developer focused on writing clean, elegant, and efficient code. With a deep interest in software architecture and modern web technologies, I bridge the gap between complex backend logic and seamless frontend design.</p>
-                                <p class="about-bio">🚀 Java Full-Stack Engineer | Spring Boot & Angular | Currently upskilling in Data Engineering & Python 🐍</p>
+                                <p class="about-bio">I am a passionate Fullstack Python Developer and Data Engineer dedicated to building clean, scalable web architectures and high-performance data systems. Specializing in robust Python backends and optimized ETL pipelines, I bridge the gap between complex data processing and seamless, data-driven user experiences.</p>
+                                <p class="about-bio" style="color:#ffd60a;">🚀 Java Full-Stack Engineer | Spring Boot & Angular | Currently upskilling in Data Engineering & Python 🐍</p>
 
                                 <h4 class="skills-heading"></h4>
                                 <div class="skill-tiles">
@@ -98,13 +99,14 @@
                             </div>
 
                             <div class="about-tab-content" id="tab-creative" role="tabpanel">
-                                <p class="about-bio">Explorer · Adventurer · Foodie · I click at times. I observe and capture moments that become memories — photography is how I see the world differently.</p>
-                                <p class="about-bio">Advanced Adobe Photoshop Editor &middot; Nikon D5300 & Z6III &middot; HIPA Merit Award Winner &middot; Documentary &middot; Street &middot; Event &middot; Travel</p>
+                                <p class="about-bio">A HIPA Merit Award-winning photographer dedicated to experiencing and capturing the vibrant soul of Incredible India.Armed with my Nikon Z6III & D5300 and refined by advanced Adobe Photoshop editing,I specialize in documentary, street, and travel photography.Every frame is an authentic visual story, preserving the raw and unfiltered beauty of every journey.</p>
+                                <p class="about-bio" style="color:#ffd60a;">Explorer · Adventurer · Foodie · I click at times. I observe and capture moments that become memories — photography is how I see the world differently.</p>
 
                                 <h4 class="skills-heading"></h4>
                                 <div class="skill-tiles">
-                                    <div class="skill-tile"><i class="fas fa-camera skill-tile__icon" style="color:#ffd60a;"></i><span>Street Photo</span></div>
-                                    <div class="skill-tile"><i class="fas fa-camera-retro skill-tile__icon" style="color:#ff8c00;"></i><span>Documentation</span></div>
+                                    <div class="skill-tile"><i class="fas fa-camera skill-tile__icon" style="color:#ffd60a;"></i><span>Photography</span></div>
+                                    <div class="skill-tile"><i class="fas fa-plane-departure skill-tile__icon" style="color:#ff8c00;"></i><span>Travel</span></div>
+                                    <div class="skill-tile"><i class="fas fa-binoculars skill-tile__icon" style="color:#ff8c00;"></i><span>Exploration</span></div>
                                     <div class="skill-tile">
                                         <svg class="skill-tile__icon" viewBox="0 0 50 50" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" rx="7" fill="#001e36"/><text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#31a8ff">Ps</text></svg>
                                         <span>Photoshop</span>
@@ -317,7 +319,7 @@
 
         <div id="creative-modules-wrapper" style="display: none;">
 
-                        <section id="creative-achievements" class="section">
+            <section id="creative-achievements" class="section">
                 <div class="container">
                     <h3 class="section-title reveal-up">Achievements</h3>
                     
@@ -328,11 +330,11 @@
                                 
                                 <div class="carousel-item-card">
                                     <div>
-                                        <h5 class="project-title">HIPA International Photography Award</h5>
-                                        <p class="cert-issuer"><i class="fas fa-award me-1"></i>HIPA Board</p>
-                                        <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: 2024</p>
+                                        <h5 class="project-title">HIPA International Photography Merit Award</h5>
+                                        <p class="cert-issuer"><i class="fas fa-award me-1"></i>Theme: Diversity<br>Creative Art Section</p>
+                                        <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: 2023</p>
                                     </div>
-                                    <span class="btn-cert">Merit Accomplishment</span>
+                                    <a class="btn-cert" href="https://drive.google.com/file/d/1UMPSEmCzT__h7nCIkxI7AzJU5sXAhF2e/view?usp=sharing" target="_blank" rel="noopener noreferrer">Merit Accomplishment</a>
                                 </div>
 
                                 <div class="carousel-item-card">
@@ -341,7 +343,7 @@
                                         <p class="cert-issuer"><i class="fas fa-building me-1"></i>Nikon Academy</p>
                                         <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: November 2023</p>
                                     </div>
-                                    <span class="btn-cert">Creative Accomplishment</span>
+                                    <a class="btn-cert" href="#" target="_blank" rel="noopener noreferrer">Creative Accomplishment</a>
                                 </div>
 
                             </div>
@@ -351,13 +353,18 @@
                 </div>
             </section>
 
-
-
+            <!-- REMOVED INSTAGRAM GRID -> INSTALLED DYNAMIC BLOG CAROUSEL -->
             <section id="creative-works" class="section">
                 <div class="container">
-                    <h3 class="section-title reveal-up">My Works</h3>
-                    <div class="instagram-grid-container" id="instagram-stream-target">
-                        <div class="p-3 text-muted">Connecting to Instagram channel stream...</div>
+                    <h3 class="section-title reveal-up">Featured Blog Entries</h3>
+                    <div class="carousel-wrapper reveal-up">
+                        <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="blog-stream-track"><i class="fas fa-chevron-left"></i></button>
+                        <div class="carousel-container">
+                            <div class="carousel-track" id="blog-stream-track">
+                                <div class="p-3 text-muted">Aggregating fresh data feeds from the blog hub...</div>
+                            </div>
+                        </div>
+                        <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="blog-stream-track"><i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
             </section>
@@ -380,7 +387,7 @@
                         <div class="hello-side-popup"><h6>Direct real-time communication on WhatsApp.</h6></div>
                     </div>
                     <div class="hello-deck-item">
-                        <a href="https://maps.google.com/?q=Kolkata" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-map" aria-label="Google Map Location"><i class="fas fa-map-marked-alt"></i></a>
+                        <a href="https://maps.app.goo.gl/WX5TppHP8aopbEJWA?g_st=ac" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-map" aria-label="Google Map Location"><i class="fas fa-map-marked-alt"></i></a>
                         <div class="hello-side-popup"><h6>If you're in Kolkata, let's meet up!</h6></div>
                     </div>
                 </div>
@@ -388,7 +395,7 @@
         </section>
     </main>
 
-    <footer>
+    <footer style="color:#ffd60a;">
         <p>© 2026 Ishan's Portfolio. All rights reserved.</p>
     </footer>
 

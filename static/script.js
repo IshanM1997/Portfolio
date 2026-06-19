@@ -24,7 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const roleBadge = document.getElementById('about-role-badge');
     const technicalModules = document.getElementById('technical-modules-wrapper');
     const creativeModules = document.getElementById('creative-modules-wrapper');
-    const bgVideoElement = document.getElementById('bg-video-element');
+    const bgImageElement = document.getElementById('bg-image-element');
+
+    // Default Initialization Image
+    if (bgImageElement) {
+        bgImageElement.style.backgroundImage = "url('./assets/bg-images/tech-bg.png')"; // Add your tech background image path here later
+    }
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('revealed');
+        });
+    }, { threshold: 0.08 });
 
     masterTabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -39,31 +50,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('tab-creative').classList.remove('active');
                 if (roleBadge) roleBadge.textContent = 'Software Engineer';
                 
-                technicalModules.style.display = 'block';
-                creativeModules.style.display = 'none';
+                if (technicalModules) technicalModules.style.display = 'block';
+                if (creativeModules) creativeModules.style.display = 'none';
                 
-                if (bgVideoElement) {
-                    bgVideoElement.src = './assets/videos/tech.mp4';
-                    bgVideoElement.play().catch(() => {});
+                // Dynamic Background Switching For Tech Workspace
+                if (bgImageElement) {
+                    bgImageElement.style.backgroundImage = "url('./assets/bg-images/tech-bg.png')"; // Change to your desired asset
                 }
             } else {
                 document.getElementById('tab-technical').classList.remove('active');
                 document.getElementById('tab-creative').classList.add('active');
                 if (roleBadge) roleBadge.textContent = 'Explorer & Photographer';
 
-                technicalModules.style.display = 'none';
-                creativeModules.style.display = 'block';
+                if (technicalModules) technicalModules.style.display = 'none';
+                if (creativeModules) creativeModules.style.display = 'block';
                 
-                // 1. Generate the grid layout elements dynamically
-                loadInstagramMockStream();
+                // Initialize modern blog feed pipeline cleanly
+                loadBlogCarouselFeed();
                 
-                // 2. Re-track the scroll visibility engine for newly loaded components
-                const creativeItems = creativeModules.querySelectorAll('.reveal-up');
-                creativeItems.forEach(el => revealObserver.observe(el));
+                // Re-track lazy items safely dynamically
+                if (creativeModules) {
+                    const creativeItems = creativeModules.querySelectorAll('.reveal-up');
+                    creativeItems.forEach(el => revealObserver.observe(el));
+                }
                 
-                if (bgVideoElement) {
-                    bgVideoElement.src = './assets/videos/creative.mp4';
-                    bgVideoElement.play().catch(() => {});
+                // Dynamic Background Switching For Creative Workspace
+                if (bgImageElement) {
+                    bgImageElement.style.backgroundImage = "url('./assets/bg-images/creative-bg.jpg')"; // Change to your desired asset
                 }
             }
             generateDynamicNavbar();
@@ -133,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let currentX = 0;
             if (transformMatrix !== 'none') currentX = parseInt(transformMatrix.split(',')[4]);
 
-            const shiftStep = 310;
+            const shiftStep = 330; // Updated alignment margin to map blog elements cleanly
             if (arrow.classList.contains('carousel-arrow--left')) {
                 currentX = Math.min(currentX + shiftStep, 0);
             } else {
@@ -187,37 +200,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // --- DYNAMIC INSTAGRAM DATA STREAM ---
-    const loadInstagramMockStream = () => {
-        const container = document.getElementById('instagram-stream-target');
-        if (!container || container.querySelector('.instagram-post-wrapper')) return;
+    // --- NEW ENGINE: DYNAMIC BLOG STREAM CAROUSEL DATA AGGREGATION ---
+    const loadBlogCarouselFeed = () => {
+        const track = document.getElementById('blog-stream-track');
+        if (!track || track.querySelector('.blog-carousel-item')) return;
 
-        container.innerHTML = '';
-        const captureCategories = [
-            { name: 'Street', id: 'CtA98bOx1aA' },
-            { name: 'Documentary', id: 'CrM71xLz4bB' },
-            { name: 'Travel', id: 'CgP25pKy8cC' },
-            { name: 'Architecture', id: 'CfO12qWw9dD' },
-            { name: 'Portrait', id: 'CdK34eRm2eE' },
-            { name: 'Landscape', id: 'CcJ89tVp3fF' }
+        track.innerHTML = '';
+
+        // Add your target URLs and cover image placements inside this configuration mock dictionary
+        const mockBlogFeeds = [
+            {
+                title: "Architecting Scalable Microservices with Spring Boot",
+                description: "Delve deep inside core patterns for scaling message pipelines and distributed transaction layers securely without performance leaks.",
+                blogName: "Tech Horizon Blog",
+                link: "https://medium.com", 
+                coverImage: "./assets/images/blog1.jpg" // You can replace this path later
+            },
+            {
+                title: "The Art of Visual Documentation and Street Framing",
+                description: "Capturing urban environments gracefully through geometric lines, high contrast shadows, and dynamic subject integration workflow routines.",
+                blogName: "Shutter Explorer",
+                link: "https://dev.to",
+                coverImage: "./assets/images/blog2.jpg" // You can replace this path later
+            },
+            {
+                title: "Optimizing Enterprise Pipelines for Zero Lag Analytics",
+                description: "A look into dimensional schema tuning, localized cache structures, and database query strategy patterns designed for high throughput systems.",
+                blogName: "Data Engine Hub",
+                link: "https://medium.com",
+                coverImage: "./assets/images/blog3.jpg" // You can replace this path later
+            }
         ];
-        
-        captureCategories.forEach((cat) => {
-            const post = document.createElement('a');
-            post.href = `https://www.instagram.com/ishan_mukherjee_1997`;
-            post.target = "_blank";
-            post.className = "instagram-post-wrapper reveal-up";
-            post.innerHTML = `
-                <div class="instagram-image-skeleton">
-                    <i class="fas fa-camera visual-fallback-icon"></i>
-                    <span class="instagram-tag-overlay">#${cat.name}</span>
+
+        mockBlogFeeds.forEach(feed => {
+            const card = document.createElement('a');
+            card.href = feed.link;
+            card.target = "_blank";
+            card.className = "blog-carousel-item";
+            card.innerHTML = `
+                <div class="blog-cover-img-wrapper">
+                    <img src="${feed.coverImage}" alt="${feed.title}" class="blog-cover-img" onerror="this.src='https://images.unsplash.com/photo-1546074177-ffebd9a84d3c?q=80&w=600&auto=format&fit=crop'">
                 </div>
-                <div class="instagram-hover-stats">
-                    <span><i class="fab fa-instagram me-2"></i>View Post</span>
+                <div class="blog-card-details">
+                    <div>
+                        <div class="blog-site-badge"><i class="fas fa-bookmark me-1"></i>${feed.blogName}</div>
+                        <h5 class="blog-card-title">${feed.title}</h5>
+                        <p class="blog-card-desc">${feed.description}</p>
+                    </div>
                 </div>
             `;
-            container.appendChild(post);
+            track.appendChild(card);
         });
+
+        // Trigger dynamic metrics tracking validation
+        setTimeout(() => evaluateArrowLimits(track), 300);
     };
 
     // --- DYNAMIC NAVIGATION DEPLOYMENT REGIME (ICONIZED) ---
@@ -231,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </a>
         `;
         
-        if (technicalModules.style.display !== 'none') {
+        if (technicalModules && technicalModules.style.display !== 'none') {
             menu.innerHTML += `
                 <a href="#tech-works" class="nav-link" data-tooltip="Works">
                     <i class="fas fa-laptop-code"></i>
@@ -245,8 +281,8 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         } else {
             menu.innerHTML += `
-                <a href="#creative-works" class="nav-link" data-tooltip="My Works">
-                    <i class="fas fa-camera"></i>
+                <a href="#creative-works" class="nav-link" data-tooltip="My Blogs">
+                    <i class="fas fa-newspaper"></i>
                 </a>
                 <a href="#creative-achievements" class="nav-link" data-tooltip="Achievements">
                     <i class="fas fa-award"></i>
@@ -297,14 +333,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Scroll-Driven Component Reveal System ---
     const revealElements = document.querySelectorAll('.reveal-up');
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('revealed');
-        });
-    }, { threshold: 0.08 });
-    revealElements.forEach(el => revealObserver.observe(el));
+    revealElements.forEach(el => {
+        if (el.closest('#creative-modules-wrapper') === null) {
+            revealObserver.observe(el);
+        }
+    });
 
-    // Run Initializations
+    // Run Initializations Safely
     loadGitHubRepositories();
     generateDynamicNavbar();
     setTimeout(resetCarouselTracks, 400);
