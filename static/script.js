@@ -1,346 +1,622 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Dynamic Favicon Processing Node ---
-    const originalImageSrc = './assets/images/DP.png';
+    // =====================================================
+    // DYNAMIC FAVICON (circular crop from DP.png)
+    // =====================================================
     const faviconElement = document.getElementById('favicon');
-    const img = new Image();
-    img.src = originalImageSrc;
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
+    const dpImg = new Image();
+    dpImg.src = './assets/images/DP.png';
+    dpImg.crossOrigin = 'anonymous';
+    dpImg.onload = () => {
         const canvas = document.createElement('canvas');
         const size = 128;
         canvas.width = size; canvas.height = size;
         const ctx = canvas.getContext('2d');
         ctx.beginPath(); ctx.arc(size/2, size/2, size/2, 0, Math.PI*2); ctx.clip();
-        let srcX = 0, srcY = 0, srcW = img.width, srcH = img.height;
-        if (img.width > img.height) { srcW = img.height; srcX = (img.width - img.height) / 2; } 
-        else if (img.height > img.width) { srcH = img.width; srcY = (img.height - img.width) / 2; }
-        ctx.drawImage(img, srcX, srcY, srcW, srcH, 0, 0, size, size);
-        if (faviconElement) faviconElement.href = canvas.toDataURL('image/png');
+        let srcX=0,srcY=0,srcW=dpImg.width,srcH=dpImg.height;
+        if(dpImg.width>dpImg.height){srcW=dpImg.height;srcX=(dpImg.width-dpImg.height)/2;}
+        else if(dpImg.height>dpImg.width){srcH=dpImg.width;srcY=(dpImg.height-dpImg.width)/2;}
+        ctx.drawImage(dpImg,srcX,srcY,srcW,srcH,0,0,size,size);
+        if(faviconElement) faviconElement.href=canvas.toDataURL('image/png');
     };
 
-    // --- WORKSPACE OVERSEER MATRIX & DYNAMIC BACKGROUNDS ---
-    const masterTabs = document.querySelectorAll('.master-nav-tab');
-    const roleBadge = document.getElementById('about-role-badge');
-    const technicalModules = document.getElementById('technical-modules-wrapper');
-    const creativeModules = document.getElementById('creative-modules-wrapper');
-    const bgImageElement = document.getElementById('bg-image-element');
+    // =====================================================
+    // DYNAMIC EXPERIENCE COUNTER
+    //
+    // Edit EXP_START to your actual first working day.
+    // Month is 0-indexed: Jan=0, Feb=1 … Sep=8, Dec=11
+    // =====================================================
+    const EXP_START = new Date(2022, 10, 6); // 1 September 2021
 
-    // Default Initialization Image
-    if (bgImageElement) {
-        bgImageElement.style.backgroundImage = "url('./assets/bg-images/tech-bg.png')"; // Add your tech background image path here later
+    function updateExperienceCounter() {
+        const now  = new Date();
+        let years  = now.getFullYear() - EXP_START.getFullYear();
+        let months = now.getMonth()    - EXP_START.getMonth();
+        if (months < 0) { years--; months += 12; }
+
+        // e.g. "4.9+" = 4 yrs 9 months; "4+" = exact year boundary
+        const display = years + (months > 0 ? '.' + months : '') + '+';
+
+        // Every element with data-stat="exp-years" gets updated
+        document.querySelectorAll('[data-stat="exp-years"]').forEach(el => {
+            el.textContent = display;
+        });
     }
 
+    updateExperienceCounter();
+    // Refresh every hour — stays live without a page reload
+    setInterval(updateExperienceCounter, 3600000);
+
+    // =====================================================
+    // INTERSECTION OBSERVER (scroll reveals)
+    // =====================================================
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('revealed');
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target); // one-shot
+            }
         });
     }, { threshold: 0.08 });
 
-    masterTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            masterTabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
-            tab.classList.add('active');
-            tab.setAttribute('aria-selected', 'true');
-
-            const selectedWorkspace = tab.getAttribute('data-workspace');
-
-            if (selectedWorkspace === 'technical-workspace') {
-                document.getElementById('tab-technical').classList.add('active');
-                document.getElementById('tab-creative').classList.remove('active');
-                if (roleBadge) roleBadge.textContent = 'Software Engineer';
-                
-                if (technicalModules) technicalModules.style.display = 'block';
-                if (creativeModules) creativeModules.style.display = 'none';
-                
-                // Dynamic Background Switching For Tech Workspace
-                if (bgImageElement) {
-                    bgImageElement.style.backgroundImage = "url('./assets/bg-images/tech-bg.png')"; // Change to your desired asset
-                }
-            } else {
-                document.getElementById('tab-technical').classList.remove('active');
-                document.getElementById('tab-creative').classList.add('active');
-                if (roleBadge) roleBadge.textContent = 'Explorer & Photographer';
-
-                if (technicalModules) technicalModules.style.display = 'none';
-                if (creativeModules) creativeModules.style.display = 'block';
-                
-                // Initialize modern blog feed pipeline cleanly
-                loadBlogCarouselFeed();
-                
-                // Re-track lazy items safely dynamically
-                if (creativeModules) {
-                    const creativeItems = creativeModules.querySelectorAll('.reveal-up');
-                    creativeItems.forEach(el => revealObserver.observe(el));
-                }
-                
-                // Dynamic Background Switching For Creative Workspace
-                if (bgImageElement) {
-                    bgImageElement.style.backgroundImage = "url('./assets/bg-images/creative-bg.jpg')"; // Change to your desired asset
-                }
-            }
-            generateDynamicNavbar();
-            resetCarouselTracks();
-        });
-    });
-
-    // --- INTERACTIVE NESTED TAB DISPATCHER ---
-    const setupTabSwitching = (tabClass, panelClass, attributeData) => {
-        document.body.addEventListener('click', (e) => {
-            const clickedTab = e.target.closest(`.${tabClass}`);
-            if (!clickedTab) return;
-
-            const tabContainer = clickedTab.parentElement;
-            const targetId = clickedTab.getAttribute(attributeData);
-            const parentSection = tabContainer.parentElement;
-
-            tabContainer.querySelectorAll(`.${tabClass}`).forEach(t => {
-                t.classList.remove('active');
-                t.setAttribute('aria-selected', 'false');
-            });
-            parentSection.querySelectorAll(`.${panelClass}`).forEach(p => p.classList.remove('active'));
-
-            clickedTab.classList.add('active');
-            clickedTab.setAttribute('aria-selected', 'true');
-            const targetPanel = document.getElementById(targetId);
-            if (targetPanel) {
-                targetPanel.classList.add('active');
-                const innerTrack = targetPanel.querySelector('.carousel-track');
-                if (innerTrack) evaluateArrowLimits(innerTrack);
-            }
-        });
-    };
-
-    setupTabSwitching('nested-tab', 'nested-panel', 'data-sub-target');
-    setupTabSwitching('logo-tab', 'brand-panel', 'data-brand-target');
-
-    // --- CAROUSEL LOCOMOTION ROUTINES ---
-    const evaluateArrowLimits = (track) => {
-        if (!track) return;
-        const wrapper = track.closest('.carousel-wrapper');
-        if (!wrapper) return;
-        const leftBtn = wrapper.querySelector('.carousel-arrow--left');
-        const rightBtn = wrapper.querySelector('.carousel-arrow--right');
-        const container = wrapper.querySelector('.carousel-container');
-        if (!leftBtn || !rightBtn || !container) return;
-
-        const maxScroll = track.scrollWidth - container.clientWidth;
-        const transformMatrix = window.getComputedStyle(track).transform;
-        let currentX = 0;
-        if (transformMatrix !== 'none') {
-            currentX = Math.abs(parseInt(transformMatrix.split(',')[4]));
-        }
-
-        leftBtn.disabled = currentX <= 5;
-        rightBtn.disabled = currentX >= maxScroll - 5 || maxScroll <= 0;
-    };
-
-    document.querySelectorAll('.carousel-arrow').forEach(arrow => {
-        arrow.addEventListener('click', () => {
-            const trackId = arrow.getAttribute('data-track-id');
-            const track = document.getElementById(trackId);
-            if (!track) return;
-            const container = track.parentElement;
-            
-            const transformMatrix = window.getComputedStyle(track).transform;
-            let currentX = 0;
-            if (transformMatrix !== 'none') currentX = parseInt(transformMatrix.split(',')[4]);
-
-            const shiftStep = 330; // Updated alignment margin to map blog elements cleanly
-            if (arrow.classList.contains('carousel-arrow--left')) {
-                currentX = Math.min(currentX + shiftStep, 0);
-            } else {
-                const maxScroll = -(track.scrollWidth - container.clientWidth);
-                currentX = Math.max(currentX - shiftStep, maxScroll);
-            }
-
-            track.style.transform = `translateX(${currentX}px)`;
-            setTimeout(() => evaluateArrowLimits(track), 450);
-        });
-    });
-
-    const resetCarouselTracks = () => {
-        document.querySelectorAll('.carousel-track').forEach(track => {
-            track.style.transform = 'translateX(0px)';
-            setTimeout(() => evaluateArrowLimits(track), 200);
-        });
-    };
-
-    window.addEventListener('resize', resetCarouselTracks);
-
-    // --- DYNAMIC REPOSITORIES STREAM ENGINE (GITHUB) ---
-    const loadGitHubRepositories = async () => {
-        const track = document.getElementById('github-track');
-        if (!track) return;
-        try {
-            const response = await fetch('https://api.github.com/users/IshanM1997/repos?sort=updated&per_page=6');
-            if (!response.ok) throw new Error();
-            const data = await response.json();
-            track.innerHTML = '';
-            data.forEach(repo => {
-                const node = document.createElement('a');
-                node.href = repo.html_url;
-                node.target = '_blank';
-                node.className = 'carousel-item-card';
-                node.innerHTML = `
-                    <div>
-                        <h5 class="project-title">${repo.name}</h5>
-                        <p class="project-desc">${repo.description || 'Production software components and architectural logic configurations.'}</p>
-                    </div>
-                    <div class="project-stats">
-                        <span><i class="fas fa-star me-1"></i>${repo.stargazers_count}</span>
-                        <span><i class="fas fa-code-branch me-1"></i>${repo.forks_count}</span>
-                    </div>
-                `;
-                track.appendChild(node);
-            });
-            evaluateArrowLimits(track);
-        } catch {
-            track.innerHTML = '<div class="p-3 text-danger">Integration connection dropped. Checkout profile directly.</div>';
-        }
-    };
-
-    // --- NEW ENGINE: DYNAMIC BLOG STREAM CAROUSEL DATA AGGREGATION ---
-    const loadBlogCarouselFeed = () => {
-        const track = document.getElementById('blog-stream-track');
-        if (!track || track.querySelector('.blog-carousel-item')) return;
-
-        track.innerHTML = '';
-
-        // Add your target URLs and cover image placements inside this configuration mock dictionary
-        const mockBlogFeeds = [
-            {
-                title: "Architecting Scalable Microservices with Spring Boot",
-                description: "Delve deep inside core patterns for scaling message pipelines and distributed transaction layers securely without performance leaks.",
-                blogName: "Tech Horizon Blog",
-                link: "https://medium.com", 
-                coverImage: "./assets/images/blog1.jpg" // You can replace this path later
-            },
-            {
-                title: "The Art of Visual Documentation and Street Framing",
-                description: "Capturing urban environments gracefully through geometric lines, high contrast shadows, and dynamic subject integration workflow routines.",
-                blogName: "Shutter Explorer",
-                link: "https://dev.to",
-                coverImage: "./assets/images/blog2.jpg" // You can replace this path later
-            },
-            {
-                title: "Optimizing Enterprise Pipelines for Zero Lag Analytics",
-                description: "A look into dimensional schema tuning, localized cache structures, and database query strategy patterns designed for high throughput systems.",
-                blogName: "Data Engine Hub",
-                link: "https://medium.com",
-                coverImage: "./assets/images/blog3.jpg" // You can replace this path later
-            }
-        ];
-
-        mockBlogFeeds.forEach(feed => {
-            const card = document.createElement('a');
-            card.href = feed.link;
-            card.target = "_blank";
-            card.className = "blog-carousel-item";
-            card.innerHTML = `
-                <div class="blog-cover-img-wrapper">
-                    <img src="${feed.coverImage}" alt="${feed.title}" class="blog-cover-img" onerror="this.src='https://images.unsplash.com/photo-1546074177-ffebd9a84d3c?q=80&w=600&auto=format&fit=crop'">
-                </div>
-                <div class="blog-card-details">
-                    <div>
-                        <div class="blog-site-badge"><i class="fas fa-bookmark me-1"></i>${feed.blogName}</div>
-                        <h5 class="blog-card-title">${feed.title}</h5>
-                        <p class="blog-card-desc">${feed.description}</p>
-                    </div>
-                </div>
-            `;
-            track.appendChild(card);
-        });
-
-        // Trigger dynamic metrics tracking validation
-        setTimeout(() => evaluateArrowLimits(track), 300);
-    };
-
-    // --- DYNAMIC NAVIGATION DEPLOYMENT REGIME (ICONIZED) ---
-    const generateDynamicNavbar = () => {
-        const menu = document.getElementById('nav-menu');
-        if (!menu) return;
-        
-        menu.innerHTML = `
-            <a href="#about" class="nav-link active" data-tooltip="About">
-                <i class="fas fa-user"></i>
-            </a>
-        `;
-        
-        if (technicalModules && technicalModules.style.display !== 'none') {
-            menu.innerHTML += `
-                <a href="#tech-works" class="nav-link" data-tooltip="Works">
-                    <i class="fas fa-laptop-code"></i>
-                </a>
-                <a href="#tech-experience" class="nav-link" data-tooltip="Experience">
-                    <i class="fas fa-briefcase"></i>
-                </a>
-                <a href="#tech-education" class="nav-link" data-tooltip="Education">
-                    <i class="fas fa-graduation-cap"></i>
-                </a>
-            `;
-        } else {
-            menu.innerHTML += `
-                <a href="#creative-works" class="nav-link" data-tooltip="My Blogs">
-                    <i class="fas fa-newspaper"></i>
-                </a>
-                <a href="#creative-achievements" class="nav-link" data-tooltip="Achievements">
-                    <i class="fas fa-award"></i>
-                </a>
-            `;
-        }
-        
-        menu.innerHTML += `
-            <a href="#contact" class="nav-link" data-tooltip="Contact">
-                <i class="fas fa-paper-plane"></i>
-            </a>
-        `;
-    };
-
-    // --- SOCIAL APPRECIATION TRANSACTION LAYER ---
-    const likeBtn = document.getElementById('like-btn');
-    const likeCount = document.getElementById('like-count');
-    const likeThanks = document.getElementById('like-thanks');
-    let countVal = parseInt(localStorage.getItem('p_likes') || '0');
-    let stateActive = localStorage.getItem('p_state') === 'true';
-
-    if (likeCount) likeCount.textContent = countVal;
-    if (stateActive && likeBtn) likeBtn.classList.add('liked');
-
-    if (likeBtn) {
-        likeBtn.addEventListener('click', () => {
-            if (!stateActive) {
-                countVal++; stateActive = true;
-                localStorage.setItem('p_likes', countVal);
-                localStorage.setItem('p_state', 'true');
-                if (likeCount) likeCount.textContent = countVal;
-                likeBtn.classList.add('liked');
-                if (likeThanks) { likeThanks.textContent = '🎉 Thank you!'; setTimeout(() => likeThanks.textContent='', 2000); }
-            }
+    // Helper: start observing unobserved .reveal-up inside a root
+    function observeRevealElements(root) {
+        (root || document).querySelectorAll('.reveal-up:not(.revealed)').forEach(el => {
+            revealObserver.observe(el);
         });
     }
 
-    // --- Hamburger Mobile Execution System ---
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
-    if (hamburger && navMenu) {
-        hamburger.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            hamburger.querySelector('i').classList.toggle('fa-bars');
-            hamburger.querySelector('i').classList.toggle('fa-times');
-        });
-    }
-
-    // --- Scroll-Driven Component Reveal System ---
-    const revealElements = document.querySelectorAll('.reveal-up');
-    revealElements.forEach(el => {
-        if (el.closest('#creative-modules-wrapper') === null) {
+    // On init: skip hidden creative sections
+    document.querySelectorAll('.reveal-up').forEach(el => {
+        if (!el.closest('#creative-modules-wrapper') && !el.closest('#creative-hero-layout')) {
             revealObserver.observe(el);
         }
     });
 
-    // Run Initializations Safely
+    // =====================================================
+    // WORKSPACE SWITCHER
+    // =====================================================
+    const masterTabs         = document.querySelectorAll('.ws-toggle-btn');
+    const technicalModules   = document.getElementById('technical-modules-wrapper');
+    const creativeModules    = document.getElementById('creative-modules-wrapper');
+    const bgImageElement     = document.getElementById('bg-image-element');
+    const techHeroLayout     = document.getElementById('tech-hero-layout');
+    const creativeHeroLayout = document.getElementById('creative-hero-layout');
+
+    if (bgImageElement) {
+        bgImageElement.style.backgroundImage = "url('./assets/bg-images/tech-bg.png')";
+    }
+
+    function switchWorkspace(workspace) {
+        const isTech = workspace === 'technical-workspace';
+
+        // Body class drives all CSS token variables (accent, surface, borders)
+        document.body.classList.toggle('workspace-technical', isTech);
+        document.body.classList.toggle('workspace-creative',  !isTech);
+
+        // Toggle hero layouts — empty string restores CSS-defined display value
+        if (techHeroLayout)     techHeroLayout.style.display     = isTech ? '' : 'none';
+        if (creativeHeroLayout) creativeHeroLayout.style.display = isTech ? 'none' : 'grid';
+
+        // Toggle module wrappers
+        if (technicalModules) technicalModules.style.display = isTech ? 'block' : 'none';
+        if (creativeModules)  creativeModules.style.display  = isTech ? 'none'  : 'block';
+
+        // Background image
+        if (bgImageElement) {
+            bgImageElement.style.backgroundImage = isTech
+                ? "url('./assets/bg-images/tech-bg.png')"
+                : "url('./assets/bg-images/creative-bg.png')";
+        }
+
+        // After display change, observe newly visible reveal-up elements
+        if (!isTech) {
+            requestAnimationFrame(() => {
+                if (creativeHeroLayout) observeRevealElements(creativeHeroLayout);
+                if (creativeModules)    observeRevealElements(creativeModules);
+                loadPhotoGallery(); // lazy-load gallery on first creative open
+            });
+        }
+
+        generateDynamicNavbar();
+        resetCarouselTracks();
+    }
+
+    masterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            masterTabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            switchWorkspace(tab.getAttribute('data-workspace'));
+        });
+    });
+
+    // =====================================================
+    // NESTED TAB DISPATCHER (Projects/Certs, Edu, Brand panels)
+    // =====================================================
+    function setupTabSwitching(tabClass, panelClass, attr) {
+        document.body.addEventListener('click', (e) => {
+            const clicked = e.target.closest('.' + tabClass);
+            if (!clicked) return;
+            const container = clicked.parentElement;
+            const parent    = container.parentElement;
+            const targetId  = clicked.getAttribute(attr);
+
+            container.querySelectorAll('.' + tabClass).forEach(t => {
+                t.classList.remove('active'); t.setAttribute('aria-selected','false');
+            });
+            parent.querySelectorAll('.' + panelClass).forEach(p => p.classList.remove('active'));
+
+            clicked.classList.add('active');
+            clicked.setAttribute('aria-selected', 'true');
+
+            const panel = document.getElementById(targetId);
+            if (panel) {
+                panel.classList.add('active');
+                const innerTrack = panel.querySelector('.carousel-track');
+                if (innerTrack) evaluateArrowLimits(innerTrack);
+            }
+        });
+    }
+
+    setupTabSwitching('nested-tab', 'nested-panel', 'data-sub-target');
+    setupTabSwitching('logo-tab',   'brand-panel',  'data-brand-target');
+
+    // =====================================================
+    // CAROUSEL ENGINE (JS offset var — no fragile matrix parsing)
+    // =====================================================
+    const carouselOffsets = {};
+    const getOffset = id    => carouselOffsets[id] || 0;
+    const setOffset = (id,v) => { carouselOffsets[id] = v; };
+
+    function evaluateArrowLimits(track) {
+        if (!track) return;
+        const wrapper   = track.closest('.carousel-wrapper');
+        if (!wrapper) return;
+        const leftBtn   = wrapper.querySelector('.carousel-arrow--left');
+        const rightBtn  = wrapper.querySelector('.carousel-arrow--right');
+        const container = wrapper.querySelector('.carousel-container');
+        if (!leftBtn || !rightBtn || !container) return;
+        const maxScroll = track.scrollWidth - container.clientWidth;
+        const currentX  = Math.abs(getOffset(track.id));
+        leftBtn.disabled  = currentX <= 2;
+        rightBtn.disabled = currentX >= maxScroll - 2 || maxScroll <= 0;
+    }
+
+    document.querySelectorAll('.carousel-arrow').forEach(arrow => {
+        arrow.addEventListener('click', () => {
+            const trackId   = arrow.getAttribute('data-track-id');
+            const track     = document.getElementById(trackId);
+            if (!track) return;
+            const container = track.parentElement;
+            const STEP      = 320;
+            const maxScroll = track.scrollWidth - container.clientWidth;
+            let cur         = getOffset(trackId);
+
+            if (arrow.classList.contains('carousel-arrow--left')) {
+                cur = Math.min(cur + STEP, 0);
+            } else {
+                cur = Math.max(cur - STEP, -maxScroll);
+            }
+            setOffset(trackId, cur);
+            track.style.transform = `translateX(${cur}px)`;
+            setTimeout(() => evaluateArrowLimits(track), 420);
+        });
+    });
+
+    function resetCarouselTracks() {
+        document.querySelectorAll('.carousel-track').forEach(track => {
+            if (!track.id) return;
+            setOffset(track.id, 0);
+            track.style.transform = 'translateX(0px)';
+            setTimeout(() => evaluateArrowLimits(track), 250);
+        });
+    }
+
+    window.addEventListener('resize', resetCarouselTracks);
+
+    // =====================================================
+    // GITHUB REPOSITORIES + DYNAMIC PROJECT COUNT STAT
+    // =====================================================
+    // GITHUB REPOSITORIES + README DESCRIPTIONS
+    // =====================================================
+
+    // =====================================================
+    // GITHUB — single API call does both count + carousel
+    // =====================================================
+
+    const GH_CACHE = {
+        get: (k)    => { try { const v = sessionStorage.getItem(k); return v ? JSON.parse(v) : null; } catch { return null; } },
+        set: (k, v) => { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch {} },
+        clear: (k)  => { try { sessionStorage.removeItem(k); } catch {} }
+    };
+
+    // Clear any stale/broken cached data from previous failed loads
+    ['gh_repos', 'gh_user', 'gh_rate'].forEach(k => {
+        const v = GH_CACHE.get(k);
+        // If cached value is null or not an array/object with real data, discard it
+        if (v !== null && (Array.isArray(v) ? v.length === 0 : typeof v !== 'object')) {
+            GH_CACHE.clear(k);
+        }
+    });
+
+    function extractReadmeSummary(raw) {
+        const lines = raw.split('\n');
+        for (const line of lines) {
+            const clean = line
+                .replace(/<!--[\s\S]*?-->/g, '')
+                .replace(/!\[.*?\]\(.*?\)/g, '')
+                .replace(/\[([^\]]+)\]\(.*?\)/g, '$1')
+                .replace(/[`*_>#~\-=|]/g, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+
+            if (
+                clean.length < 30 ||
+                /^#+/.test(line) ||
+                /shields\.io|badge|travis|coverage|npm|build|status/i.test(clean) ||
+                /^\s*[-*+]\s/.test(line)
+            ) continue;
+
+            return clean.slice(0, 140) + (clean.length > 140 ? '…' : '');
+        }
+        return null;
+    }
+
+    // Stat counter — completely isolated, no shared state with carousel
+    async function loadGitHubRepoCount() {
+        const projEl = document.getElementById('stat-projects');
+        if (!projEl) return;
+
+        // Use cached repos list length if available (set by loadGitHubRepositories)
+        const cached = GH_CACHE.get('gh_repos');
+        if (Array.isArray(cached) && cached.length > 0) {
+            projEl.textContent = cached.length + '+';
+            return;
+        }
+
+        // Otherwise fire a direct lightweight fetch
+        try {
+            const res = await fetch('https://api.github.com/users/IshanM1997', {
+                headers: { Accept: 'application/vnd.github.v3+json' }
+            });
+            if (!res.ok) return; // leave as "—" rather than show wrong number
+            const user = await res.json();
+            if (user.public_repos != null) {
+                projEl.textContent = user.public_repos + '+';
+            }
+        } catch { /* silent — leave stat as "—" */ }
+    }
+
+    async function loadGitHubRepositories() {
+        const track  = document.getElementById('github-track');
+        const projEl = document.getElementById('stat-projects');
+        if (!track) return;
+
+        track.innerHTML = '<div style="padding:1rem;color:var(--text-muted);font-size:0.85rem">'
+            + '<i class="fas fa-spinner fa-spin" style="margin-right:0.5rem"></i>Fetching repositories…</div>';
+
+        try {
+            // ── Single call: per_page=100 gives us accurate total count AND full list ──
+            let data = GH_CACHE.get('gh_repos');
+
+            if (!Array.isArray(data) || data.length === 0) {
+                const res = await fetch(
+                    'https://api.github.com/users/IshanM1997/repos?sort=updated&per_page=100',
+                    { headers: { Accept: 'application/vnd.github.v3+json' } }
+                );
+
+                if (!res.ok) {
+                    const status = res.status;
+                    console.warn('GitHub repos fetch failed:', status);
+                    track.innerHTML = `<div style="padding:1rem;color:var(--text-muted);font-size:0.85rem">
+                        <i class="fas fa-exclamation-circle" style="color:var(--accent);margin-right:0.5rem"></i>
+                        Could not load repositories (HTTP ${status}) —
+                        <a href="https://github.com/IshanM1997" target="_blank"
+                           rel="noopener noreferrer" style="color:var(--accent)">view on GitHub ↗</a>
+                    </div>`;
+                    return;
+                }
+
+                data = await res.json();
+                GH_CACHE.set('gh_repos', data);
+            }
+
+            // ── Update the stat counter with the real total count ──
+            if (projEl) projEl.textContent = data.length + '+';
+
+            // ── Filter for carousel display (no forks, no profile-readme, max 10) ──
+            const filtered = data
+                .filter(r => !r.fork && r.name.toLowerCase() !== 'ishanm1997')
+                .slice(0, 10);
+
+            if (filtered.length === 0) {
+                track.innerHTML = '<div style="padding:1rem;color:var(--text-muted)">No public repositories found.</div>';
+                return;
+            }
+
+            // ── Pass 1: render cards immediately from repos list ──
+            track.innerHTML = '';
+            filtered.forEach(repo => {
+                const card = document.createElement('a');
+                card.href      = repo.html_url;
+                card.target    = '_blank';
+                card.rel       = 'noopener noreferrer';
+                card.className = 'carousel-item-card';
+
+                card.innerHTML = `
+                    <div>
+                        <h5 class="project-title">${repo.name.replace(/[-_]/g, ' ')}</h5>
+                        <p class="project-desc" id="rdesc-${repo.name}">${
+                            repo.description ||
+                            '<span class="desc-loading">Loading description…</span>'
+                        }</p>
+                    </div>
+                    <div class="project-stats">
+                        <span><i class="fas fa-star" style="margin-right:0.25rem"></i>${repo.stargazers_count}</span>
+                        <span><i class="fas fa-code-branch" style="margin-right:0.25rem"></i>${repo.forks_count}</span>
+                        ${repo.language
+                            ? `<span><i class="fas fa-circle" style="font-size:.5rem;vertical-align:middle;margin-right:0.25rem"></i>${repo.language}</span>`
+                            : ''}
+                    </div>`;
+                track.appendChild(card);
+            });
+
+            setTimeout(() => evaluateArrowLimits(track), 150);
+
+            // ── Pass 2: try README descriptions (best-effort, won't block UI) ──
+            // Each README is a separate API call — only run if we have quota headroom.
+            // We start fetching immediately; if a single one 403s we stop the rest.
+            let rateLimitExhausted = false;
+
+            await Promise.allSettled(
+                filtered.map(async repo => {
+                    if (rateLimitExhausted) return;
+
+                    const cacheKey = `rdme_${repo.name}`;
+                    let summary = GH_CACHE.get(cacheKey); // may be a string or null
+
+                    if (summary === null || summary === undefined) {
+                        try {
+                            const r = await fetch(
+                                `https://api.github.com/repos/IshanM1997/${repo.name}/readme`,
+                                { headers: { Accept: 'application/vnd.github.v3+json' } }
+                            );
+                            if (r.status === 403 || r.status === 429) {
+                                rateLimitExhausted = true;
+                                GH_CACHE.set(cacheKey, ''); // cache empty to skip next time
+                                return;
+                            }
+                            if (r.ok) {
+                                const json = await r.json();
+                                const raw  = atob(json.content.replace(/\n/g, ''));
+                                summary    = extractReadmeSummary(raw) || '';
+                                GH_CACHE.set(cacheKey, summary);
+                            } else {
+                                GH_CACHE.set(cacheKey, '');
+                                return;
+                            }
+                        } catch {
+                            GH_CACHE.set(cacheKey, '');
+                            return;
+                        }
+                    }
+
+                    const descEl = document.getElementById(`rdesc-${repo.name}`);
+                    if (!descEl) return;
+
+                    if (summary) {
+                        descEl.textContent = summary;
+                    } else if (!repo.description) {
+                        descEl.textContent = 'A software project by Ishan Mukhopadhyay.';
+                    }
+                })
+            );
+
+            // Clean up any remaining "Loading description…" shimmer spans
+            filtered.forEach(repo => {
+                const el = document.getElementById(`rdesc-${repo.name}`);
+                if (el && el.querySelector('.desc-loading')) {
+                    el.textContent = repo.description || 'A software project by Ishan Mukhopadhyay.';
+                }
+            });
+
+        } catch (err) {
+            console.error('loadGitHubRepositories error:', err);
+            track.innerHTML = `<div style="padding:1rem;color:var(--text-muted);font-size:0.85rem">
+                <i class="fas fa-exclamation-circle" style="color:var(--accent);margin-right:0.5rem"></i>
+                Could not load repositories —
+                <a href="https://github.com/IshanM1997" target="_blank"
+                   rel="noopener noreferrer" style="color:var(--accent)">view on GitHub ↗</a>
+            </div>`;
+        }
+    }
+
+    // =====================================================
+    // CREATIVE PHOTO GALLERY (replaces Blog section)
+    //
+    // Add actual photos to assets/gallery/ and update
+    // the src paths and captions in the photos array below.
+    // =====================================================
+    let galleryLoaded = false;
+
+    function loadPhotoGallery() {
+        if (galleryLoaded) return;
+        galleryLoaded = true;
+
+        const grid = document.getElementById('photo-gallery-grid');
+        if (!grid) return;
+
+        const FALLBACK = 'https://images.unsplash.com/photo-1614102073832-030967418971?q=80&w=600&auto=format&fit=crop';
+
+        // Replace src with actual photo paths once files are added
+        const photos = [
+            { src: './assets/gallery/photo1.jpg', caption: 'Streets of Kolkata',    tag: 'Street'       },
+            { src: './assets/gallery/photo2.jpg', caption: 'Golden Hour, Rajasthan', tag: 'Travel'       },
+            { src: './assets/gallery/photo3.jpg', caption: 'Festival of Colours',    tag: 'Documentary'  },
+            { src: './assets/gallery/photo4.jpg', caption: 'Monsoon Reflections',    tag: 'Nature'       },
+            { src: './assets/gallery/photo5.jpg', caption: 'Temple Silhouette',      tag: 'Architecture' },
+            { src: './assets/gallery/photo6.jpg', caption: 'Market at Dawn',         tag: 'Street'       },
+        ];
+
+        grid.innerHTML = '';
+        photos.forEach(photo => {
+            const card = document.createElement('div');
+            card.className = 'photo-card reveal-up';
+            card.setAttribute('role', 'button');
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('aria-label', 'View: ' + photo.caption);
+            card.innerHTML = `
+                <div class="photo-card-img-wrap">
+                    <img src="${photo.src}" alt="${photo.caption}"
+                         onerror="this.src='${FALLBACK}'"
+                         class="photo-card-img" loading="lazy">
+                    <div class="photo-card-overlay">
+                        <span class="photo-tag">${photo.tag}</span>
+                        <p class="photo-caption">${photo.caption}</p>
+                    </div>
+                </div>`;
+            grid.appendChild(card);
+        });
+
+        requestAnimationFrame(() => observeRevealElements(grid));
+    }
+
+    // =====================================================
+    // LIGHTBOX (click gallery photo to expand)
+    // =====================================================
+    const lightbox      = document.getElementById('photo-lightbox');
+    const lightboxImg   = document.getElementById('lightbox-img');
+    const lightboxCap   = document.getElementById('lightbox-caption');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    if (lightbox && lightboxImg && lightboxClose) {
+        document.body.addEventListener('click', (e) => {
+            const card = e.target.closest('.photo-card');
+            if (!card) return;
+            const img = card.querySelector('.photo-card-img');
+            const cap = card.querySelector('.photo-caption');
+            if (!img) return;
+            lightboxImg.src = img.src;
+            if (lightboxCap && cap) lightboxCap.textContent = cap.textContent;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    }
+
+    // =====================================================
+    // DYNAMIC NAVBAR
+    // =====================================================
+    function generateDynamicNavbar() {
+        const menu = document.getElementById('nav-menu');
+        if (!menu) return;
+        const isTech = document.body.classList.contains('workspace-technical');
+
+        let html = `<a href="#about" class="nav-link active" data-tooltip="About" data-section="about"><i class="fas fa-user"></i></a>`;
+
+        if (isTech) {
+            html += `
+                <a href="#tech-works"      class="nav-link" data-tooltip="Works"      data-section="tech-works"><i class="fas fa-laptop-code"></i></a>
+                <a href="#tech-experience" class="nav-link" data-tooltip="Experience" data-section="tech-experience"><i class="fas fa-briefcase"></i></a>
+                <a href="#tech-education"  class="nav-link" data-tooltip="Education"  data-section="tech-education"><i class="fas fa-graduation-cap"></i></a>`;
+        } else {
+            html += `
+                <a href="#creative-achievements" class="nav-link" data-tooltip="Awards"  data-section="creative-achievements"><i class="fas fa-award"></i></a>
+                <a href="#creative-gallery"       class="nav-link" data-tooltip="Gallery" data-section="creative-gallery"><i class="fas fa-images"></i></a>`;
+        }
+
+        html += `<a href="#contact" class="nav-link" data-tooltip="Contact" data-section="contact"><i class="fas fa-paper-plane"></i></a>`;
+        menu.innerHTML = html;
+
+        // Re-attach scroll spy after navbar is rebuilt
+        attachScrollSpy();
+    }
+
+    // =====================================================
+    // SCROLL SPY — highlights active nav icon on scroll
+    // =====================================================
+    let scrollSpyObserver = null;
+
+    function attachScrollSpy() {
+        // Disconnect previous observer if workspace switched
+        if (scrollSpyObserver) scrollSpyObserver.disconnect();
+
+        const navLinks = document.querySelectorAll('.nav-menu .nav-link[data-section]');
+        if (!navLinks.length) return;
+
+        // Collect all section IDs referenced by the current navbar
+        const sectionIds = Array.from(navLinks).map(l => l.getAttribute('data-section'));
+        const sections   = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+        // Which section is most visible — track visible entry with highest intersection ratio
+        const visibilityMap = {};
+
+        scrollSpyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                visibilityMap[entry.target.id] = entry.intersectionRatio;
+            });
+
+            // Find the section with the highest visibility ratio
+            let bestId   = null;
+            let bestRatio = 0;
+            for (const [id, ratio] of Object.entries(visibilityMap)) {
+                if (ratio > bestRatio) { bestRatio = ratio; bestId = id; }
+            }
+
+            if (!bestId) return;
+
+            // Update active class on all nav links
+            navLinks.forEach(link => {
+                const matches = link.getAttribute('data-section') === bestId;
+                link.classList.toggle('active', matches);
+            });
+        }, {
+            // rootMargin pulls the trigger zone to the upper third of the viewport
+            rootMargin: '-10% 0px -60% 0px',
+            threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0]
+        });
+
+        sections.forEach(sec => scrollSpyObserver.observe(sec));
+    }
+
+    // =====================================================
+    // HAMBURGER MENU
+    // =====================================================
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            const icon = hamburger.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        navMenu.addEventListener('click', (e) => {
+            if (e.target.closest('.nav-link')) {
+                navMenu.classList.remove('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            }
+        });
+    }
+
+    // =====================================================
+    // INITIALISATION
+    // =====================================================
+    // Fire count and carousel in parallel — neither blocks the other
+    loadGitHubRepoCount();
     loadGitHubRepositories();
     generateDynamicNavbar();
     setTimeout(resetCarouselTracks, 400);
+
 });
