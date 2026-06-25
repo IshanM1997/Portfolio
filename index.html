@@ -4,21 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Ishan Mukhopadhyay – Software Engineer building scalable, clean, and exceptional digital experiences.">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Ishan Mukhopadhyay | Software Engineer & Photographer">
+    <meta property="og:description" content="Fullstack Java Developer & Data Engineer. HIPA Award-winning photographer. Building clean, scalable systems and capturing India's soul.">
+    <meta property="og:image" content="./assets/images/DP.png">
+    <meta property="og:url" content="https://ishanm1997.github.io/Portfolio/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <title>Ishan's Portfolio</title>
-    
+
     <link id="favicon" rel="icon" type="image/png" sizes="32x32" href="assets/logo/Logo.png">
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <link rel="stylesheet" href="./static/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
+<body class="workspace-technical">
 
     <!-- DYNAMIC IMAGE BACKGROUND STRUCTURE -->
     <div class="image-bg-container">
         <div id="bg-image-element"></div>
         <div class="video-overlay-shroud"></div>
+    </div>
+
+    <!-- TECH HERO ACCENT SHAPES (visible only in technical tab) -->
+    <div class="tech-hero-shapes" id="tech-hero-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
     </div>
 
     <header class="navbar-custom">
@@ -27,6 +42,21 @@
                 <img src="assets/logo/Logo.png" alt="Ishan" class="logo-img logo-img-circular">
                 <span class="logo-name ms-2"></span>
             </a>
+
+            <!-- WORKSPACE TOGGLE — icon-only pill, lives in the navbar centre -->
+            <div class="workspace-toggle-pill" role="tablist" aria-label="Switch workspace">
+                <button class="ws-toggle-btn active" role="tab" aria-selected="true"
+                        data-workspace="technical-workspace"
+                        title="Technical workspace">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <button class="ws-toggle-btn" role="tab" aria-selected="false"
+                        data-workspace="creative-workspace"
+                        title="Creative workspace">
+                    <i class="fas fa-camera"></i>
+                </button>
+            </div>
+
             <nav class="nav-menu" id="nav-menu"></nav>
             <button class="hamburger" id="hamburger" aria-label="Toggle Menu">
                 <i class="fas fa-bars"></i>
@@ -35,105 +65,148 @@
     </header>
 
     <main>
+        <!-- ===== ABOUT SECTION ===== -->
         <section id="about" class="section about-section">
             <div class="container">
-                <div class="about-card reveal-up">
-                    <div class="about-card__content-stack">
-                        
-                        <div class="profile-header-block">
-                            <div class="about-avatar-wrap">
-                                <img src="./assets/images/DP.png" alt="Ishan Mukhopadhyay" class="about-avatar">
-                            </div>
-                            <h2 class="about-greeting">Hi I'm <span>Ishan Mukhopadhyay</span></h2>
-                            <h5 class="about-welcome">Welcome to my Portfolio Website.</h5>
-                            
-                            <div class="centered-badge-row">
-                                <span class="about-role-badge" id="about-role-badge">Software Engineer</span>
-                            </div>
-                            
-                            <div class="like-button-container">
-                                <button class="btn-like" id="like-btn" aria-label="Like this portfolio">
-                                    <i class="fas fa-heart like-icon"></i>
-                                    <span class="like-label">Like</span>
-                                    <span class="like-count" id="like-count">0</span>
-                                </button>
-                                <p class="like-thanks" id="like-thanks"></p>
-                            </div>
-                            <h8>If you like my work drop a <span class="heart-inline">❤</span> Like</h8>
 
-                            <div class="master-nav-tabs" role="tablist">
-                                <button class="master-nav-tab active" role="tab" aria-selected="true" data-workspace="technical-workspace">
-                                    <i class="fas fa-laptop-code me-2"></i>Technical
-                                </button>
-                                <button class="master-nav-tab" role="tab" aria-selected="false" data-workspace="creative-workspace">
-                                    <i class="fas fa-palette me-2"></i>Creative
-                                </button>
+                <!-- TECHNICAL HERO LAYOUT -->
+                <div class="tech-hero-layout" id="tech-hero-layout">
+                    <div class="tech-hero-text reveal-up">
+                        <p class="tech-intro-eyebrow"><span class="eyebrow-dot"></span> Ciao.</p>
+                        <h1 class="tech-hero-name">I'm <span>Ishan</span><br>Mukhopadhyay</h1>
+                        <h2 class="tech-hero-role">Software Developer</h2>
+                        <p class="tech-hero-bio">Fullstack Java Developer & Data Engineer dedicated to building clean, scalable web architectures and high-performance data systems. Specializing in robust Python backends and optimized ETL pipelines.</p>
+                        <p class="tech-hero-tagline"><i class="fas fa-rocket me-2"></i>Java Full-Stack · Spring Boot & Angular · Data Engineering & Python</p>
+
+                        <div class="tech-stat-row">
+                            <div class="tech-stat">
+                                <span class="stat-num" data-stat="exp-years">—</span>
+                                <span class="stat-label">Years Exp.</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-num" id="stat-projects">—</span>
+                                <span class="stat-label">GitHub Repos</span>
+                            </div>
+                            <div class="tech-stat">
+                                <span class="stat-num">2</span>
+                                <span class="stat-label">Companies</span>
                             </div>
                         </div>
 
-                        <div class="about-card__divider-horizontal"></div>
-
-                        <div class="workspace-content-area">
-                            <div class="about-tab-content active" id="tab-technical" role="tabpanel">
-                                <p class="about-bio">I am a passionate Fullstack Python Developer and Data Engineer dedicated to building clean, scalable web architectures and high-performance data systems. Specializing in robust Python backends and optimized ETL pipelines, I bridge the gap between complex data processing and seamless, data-driven user experiences.</p>
-                                <p class="about-bio" style="color:#ffd60a;">🚀 Java Full-Stack Engineer | Spring Boot & Angular | Currently upskilling in Data Engineering & Python 🐍</p>
-
-                                <h4 class="skills-heading"></h4>
-                                <div class="skill-tiles">
-                                    <div class="skill-tile"><i class="devicon-java-plain colored skill-tile__icon"></i><span>Java</span></div>
-                                    <div class="skill-tile"><i class="devicon-spring-plain colored skill-tile__icon"></i><span>Spring Boot</span></div>
-                                    <div class="skill-tile"><i class="devicon-angularjs-plain colored skill-tile__icon"></i><span>Angular JS</span></div>
-                                    <div class="skill-tile"><i class="devicon-typescript-plain colored skill-tile__icon"></i><span>TypeScript</span></div>
-                                    <div class="skill-tile"><i class="devicon-python-plain colored skill-tile__icon"></i><span>Python</span></div>
-                                    <div class="skill-tile"><i class="devicon-sqldeveloper-plain colored skill-tile__icon"></i><span>SQL</span></div>
-                                    <div class="skill-tile"><i class="devicon-datadog-original colored skill-tile__icon"></i><span>Datadog</span></div>
-                                    <div class="skill-tile"><i class="devicon-html5-plain colored skill-tile__icon"></i><span>HTML5</span></div>
-                                    <div class="skill-tile"><i class="devicon-anaconda-original colored skill-tile__icon"></i><span>Anaconda</span></div>
-                                </div>
-
-                                <div class="about-social mt-4">
-                                    <a href="https://github.com/IshanM1997" target="_blank" rel="noopener noreferrer" class="social-pill"><i class="fab fa-github"></i> GitHub</a>
-                                    <a href="https://www.linkedin.com/in/ishan-mukhopadhyay-7ab867123/" target="_blank" rel="noopener noreferrer" class="social-pill social-pill--linkedin"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                                    <a href="https://drive.google.com/file/d/1T8Dd-sF4ZMLOIpghRwhSzZ1O5fXrcFKv/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="social-pill"><i class="fas fa-file-alt"></i> Resume</a>
-                                </div>
-                            </div>
-
-                            <div class="about-tab-content" id="tab-creative" role="tabpanel">
-                                <p class="about-bio">A HIPA Merit Award-winning photographer dedicated to experiencing and capturing the vibrant soul of Incredible India.Armed with my Nikon Z6III & D5300 and refined by advanced Adobe Photoshop editing,I specialize in documentary, street, and travel photography.Every frame is an authentic visual story, preserving the raw and unfiltered beauty of every journey.</p>
-                                <p class="about-bio" style="color:#ffd60a;">Explorer · Adventurer · Foodie · I click at times. I observe and capture moments that become memories — photography is how I see the world differently.</p>
-
-                                <h4 class="skills-heading"></h4>
-                                <div class="skill-tiles">
-                                    <div class="skill-tile"><i class="fas fa-camera skill-tile__icon" style="color:#ffd60a;"></i><span>Photography</span></div>
-                                    <div class="skill-tile"><i class="fas fa-plane-departure skill-tile__icon" style="color:#ff8c00;"></i><span>Travel</span></div>
-                                    <div class="skill-tile"><i class="fas fa-binoculars skill-tile__icon" style="color:#ff8c00;"></i><span>Exploration</span></div>
-                                    <div class="skill-tile">
-                                        <svg class="skill-tile__icon" viewBox="0 0 50 50" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" rx="7" fill="#001e36"/><text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#31a8ff">Ps</text></svg>
-                                        <span>Photoshop</span>
-                                    </div>
-                                    <div class="skill-tile">
-                                        <svg class="skill-tile__icon" viewBox="0 0 50 50" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" rx="7" fill="#001a29"/><text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#aad6f8">Lr</text></svg>
-                                        <span>Lightroom</span>
-                                    </div>
-                                </div>
-
-                                <div class="about-social mt-4">
-                                    <a href="https://www.facebook.com/share/18hwwAx4qs/" target="_blank" rel="noopener noreferrer" class="social-pill social-pill--facebook"><i class="fab fa-facebook-f"></i> Facebook</a>
-                                    <a href="https://www.instagram.com/ishan_mukherjee_1997" target="_blank" rel="noopener noreferrer" class="social-pill social-pill--instagram"><i class="fab fa-instagram"></i> Instagram</a>
-                                </div>
-                            </div>
+                        <div class="tech-hero-actions">
+                            <a href="https://drive.google.com/file/d/1T8Dd-sF4ZMLOIpghRwhSzZ1O5fXrcFKv/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn-primary-tech"><i class="fas fa-file-alt me-2"></i>My Resume</a>
+                            <a href="https://github.com/IshanM1997" target="_blank" rel="noopener noreferrer" class="btn-ghost-tech"><i class="fab fa-github me-2"></i>GitHub</a>
                         </div>
 
+                        <div class="tech-skill-strip">
+                            <span class="skill-chip"><i class="devicon-java-plain colored"></i> Java</span>
+                            <span class="skill-chip"><i class="devicon-spring-plain colored"></i> Spring Boot</span>
+                            <span class="skill-chip"><i class="devicon-angularjs-plain colored"></i> Angular</span>
+                            <span class="skill-chip"><i class="devicon-typescript-plain colored"></i> TypeScript</span>
+                            <span class="skill-chip"><i class="devicon-python-plain colored"></i> Python</span>
+                            <span class="skill-chip"><i class="devicon-sqldeveloper-plain colored"></i> SQL</span>
+                            <span class="skill-chip"><i class="devicon-html5-plain colored"></i> HTML5</span>
+                            <span class="skill-chip"><i class="devicon-anaconda-original colored"></i> Anaconda</span>
+                        </div>
+
+                        <div class="tech-social-links">
+                            <a href="https://github.com/IshanM1997" target="_blank" rel="noopener noreferrer" class="tech-social-pill"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/ishan-mukhopadhyay-7ab867123/" target="_blank" rel="noopener noreferrer" class="tech-social-pill linkedin"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="tech-hero-avatar-wrap reveal-up">
+                        <div class="tech-orbit-system">
+                            <div class="tech-avatar-ring">
+                                <img src="./assets/images/DP.png" alt="Ishan Mukhopadhyay" class="tech-avatar-img">
+                            </div>
+                            <!-- LEFT COLUMN: 5 badges, zig-zag outer→inner→outer→inner→outer -->
+                            <span class="tech-badge tb-java"       title="Java"><i class="devicon-java-plain colored"></i></span>
+                            <span class="tech-badge tb-spring"     title="Spring Boot"><i class="devicon-spring-plain colored"></i></span>
+                            <span class="tech-badge tb-python"     title="Python"><i class="devicon-python-plain colored"></i></span>
+                            <span class="tech-badge tb-sql"        title="SQL"><i class="devicon-sqldeveloper-plain colored"></i></span>
+                            <span class="tech-badge tb-anaconda"   title="Anaconda"><i class="devicon-anaconda-original colored"></i></span>
+                            <!-- RIGHT COLUMN: 4 badges, zig-zag inner→outer→inner→outer -->
+                            <span class="tech-badge tb-angular"    title="Angular JS"><i class="devicon-angularjs-plain colored"></i></span>
+                            <span class="tech-badge tb-typescript" title="TypeScript"><i class="devicon-typescript-plain colored"></i></span>
+                            <span class="tech-badge tb-html"       title="HTML5"><i class="devicon-html5-plain colored"></i></span>
+                            <span class="tech-badge tb-datadog"    title="Datadog"><i class="devicon-datadog-original colored"></i></span>
+                        </div>
                     </div>
                 </div>
+
+                <!-- CREATIVE HERO LAYOUT (hidden by default) -->
+                <div class="creative-hero-layout" id="creative-hero-layout" style="display:none;">
+                    <div class="creative-hero-intro reveal-up">
+                        <p class="creative-eyebrow">— Introducing</p>
+                        <h1 class="creative-hero-name">Ishan<br>Mukhopadhyay</h1>
+                        <h2 class="tech-hero-role">Explorer | Photo-Enthusiast</h2>
+                        <p class="creative-hero-bio">A HIPA Merit Award-winning photographer dedicated to experiencing and capturing the vibrant soul of Incredible India. Armed with Nikon Z6III & D5300 and refined by advanced Adobe Photoshop editing — specializing in documentary, street, and travel photography.</p>
+                        <p class="creative-tagline">Explorer · Adventurer · Foodie · Every frame is an authentic visual story.</p>
+                        <div class="creative-hero-actions">
+                            <a href="https://www.instagram.com/ishan_mukherjee_1997" target="_blank" rel="noopener noreferrer" class="btn-primary-creative"><i class="fab fa-instagram me-2"></i>Instagram</a>
+                            <a href="https://www.facebook.com/share/18hwwAx4qs/" target="_blank" rel="noopener noreferrer" class="btn-ghost-creative"><i class="fab fa-facebook-f me-2"></i>Facebook</a>
+                        </div>
+                    </div>
+                    <div class="creative-hero-avatar-wrap reveal-up">
+                        <div class="creative-orbit-system">
+                            <div class="creative-avatar-ring">
+                                <img src="./assets/images/DP.png" alt="Ishan Mukhopadhyay" class="creative-avatar-img">
+                            </div>
+                            <!-- LEFT COLUMN: 4 badges, zig-zag outer→inner→outer→inner top-to-bottom -->
+                            <span class="orbit-badge ob-camera"  title="Photography"><i class="fas fa-camera"></i></span>
+                            <span class="orbit-badge ob-hipa"    title="HIPA Award"><i class="fas fa-award"></i></span>
+                            <span class="orbit-badge ob-travel"  title="Travel"><i class="fas fa-plane-departure"></i></span>
+                            <span class="orbit-badge ob-explore" title="Exploration"><i class="fas fa-binoculars"></i></span>
+                            <!-- RIGHT COLUMN: 3 badges, zig-zag inner→outer→inner top-to-bottom -->
+                            <span class="orbit-badge ob-ps"      title="Photoshop">Ps</span>
+                            <span class="orbit-badge ob-nikon"   title="Nikon Z6III"><i class="fas fa-camera-retro"></i></span>
+                            <span class="orbit-badge ob-lr"      title="Lightroom">Lr</span>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
+        <!-- ===== TECHNICAL MODULES ===== -->
         <div id="technical-modules-wrapper">
+
+            <!-- Services strip (Jensen Omega style) -->
+            <section class="tech-services-strip section">
+                <h5></h5>
+                <div class="container">
+                    <div class="services-grid">
+                        <div class="service-card reveal-up">
+                            <div class="service-icon"><i class="fas fa-server"></i></div>
+                            <h5>Backend Development</h5>
+                            <p>Spring Boot microservices, REST APIs, and enterprise-grade Java systems.</p>
+                        </div>
+                        <div class="service-card reveal-up">
+                            <div class="service-icon"><i class="fas fa-layer-group"></i></div>
+                            <h5>Fullstack Engineering</h5>
+                            <p>Angular front-ends powered by Spring Boot backends for real-world production apps.</p>
+                        </div>
+                        <div class="service-card reveal-up">
+                            <div class="service-icon"><i class="fas fa-database"></i></div>
+                            <h5>Data Engineering</h5>
+                            <p>ETL pipelines, star-schema data warehouses, and Python-based analytics layers.</p>
+                        </div>
+                        <div class="service-card reveal-up">
+                            <div class="service-icon"><i class="fas fa-database"></i></div>
+                            <h5>AI/ML development</h5>
+                            <p>Integrating AI agents in enterpise systems.Creating and upgrading LLMs.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section id="tech-works" class="section">
                 <div class="container">
                     <h3 class="section-title reveal-up">Works and Achievements</h3>
-                    
+
                     <div class="nested-sub-tabs reveal-up" role="tablist">
                         <button class="nested-tab active" data-sub-target="tech-projects-panel" role="tab" aria-selected="true">Projects</button>
                         <button class="nested-tab" data-sub-target="tech-certs-panel" role="tab" aria-selected="false">Certificates</button>
@@ -156,7 +229,6 @@
                             <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="tech-certs-track"><i class="fas fa-chevron-left"></i></button>
                             <div class="carousel-container">
                                 <div class="carousel-track" id="tech-certs-track">
-                                    
                                     <div class="carousel-item-card">
                                         <div>
                                             <h5 class="project-title">Up & Running with ServiceNow</h5>
@@ -165,7 +237,6 @@
                                         </div>
                                         <a href="https://www.udemy.com/certificate/UC-05c23448-0d06-48fd-8afa-46e160275be0/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
                                     </div>
-
                                     <div class="carousel-item-card">
                                         <div>
                                             <h5 class="project-title">Java Design Patterns & SOLID Principles</h5>
@@ -174,7 +245,6 @@
                                         </div>
                                         <a href="https://udemy.com/certificate/UC-a1e29c09-8ea2-4271-b5a2-556bfd7158fd/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
                                     </div>
-
                                     <div class="carousel-item-card">
                                         <div>
                                             <h5 class="project-title">Azure DevOps Fundamentals for Beginners</h5>
@@ -182,7 +252,7 @@
                                             <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>July 2025</p>
                                         </div>
                                         <a href="https://udemy.com/certificate/UC-28280004-d888-450b-ab87-c2d10fadacbc/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
-                                    </div>                                    
+                                    </div>
                                     <div class="carousel-item-card">
                                         <div>
                                             <h5 class="project-title">ChatGPT: Complete ChatGPT Course For Work 2026 (Ethically)!</h5>
@@ -191,7 +261,6 @@
                                         </div>
                                         <a href="https://udemy.com/certificate/UC-0357680a-d5bf-4c6a-88b6-6254f47fb432/" target="_blank" rel="noopener noreferrer" class="btn-cert">View Asset</a>
                                     </div>
-
                                 </div>
                             </div>
                             <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="tech-certs-track"><i class="fas fa-chevron-right"></i></button>
@@ -203,140 +272,285 @@
             <section id="tech-experience" class="section">
                 <div class="container">
                     <h3 class="section-title reveal-up">Professional Experience</h3>
-                    
+
                     <div class="logo-sub-tabs reveal-up" role="tablist">
                         <button class="logo-tab active" data-brand-target="brand-cognizant" role="tab" aria-selected="true" aria-label="Cognizant Experience">
-                            <img src="./assets/logo/cognizant.png" alt="Cognizant" class="corporate-tab-logo" onerror="this.outerHTML='Cognizant'">
+                            <img src="./assets/logo/cognizant.png" alt="Cognizant" class="corporate-tab-logo" onerror="this.outerHTML='<span class=\'logo-text-fallback\'>Cognizant</span>'">
                         </button>
                         <button class="logo-tab" data-brand-target="brand-ey" role="tab" aria-selected="false" aria-label="EY Experience">
-                            <img src="./assets/logo/EY.jpg" alt="EY" class="corporate-tab-logo" onerror="this.outerHTML='EY GDS'">
+                            <img src="./assets/logo/EY.jpg" alt="EY" class="corporate-tab-logo" onerror="this.outerHTML='<span class=\'logo-text-fallback\'>EY GDS</span>'">
                         </button>
                     </div>
 
+                    <!-- COGNIZANT -->
                     <div class="brand-panel active" id="brand-cognizant" role="tabpanel">
-                        <div class="project-grid">
-                            <div class="project-card">
-                                <div class="project-meta"><span><i class="far fa-calendar-alt me-1"></i> Feb 2024 - Present</span><span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span></div>
-                                <h2>Fullstack Java Developer</h2>
-                                <h5>TD Insurance</h5>
-                                <p>Led architecture and engineering cycles using Angular 17+ and Spring Boot microservices, boosting operational framework security compliance and data monitoring throughput.</p>
-                                <div class="project-tech"><span class="tech-tag">Angular 17+</span><span class="tech-tag">Spring Boot</span><span class="tech-tag">Datadog</span></div>
+                        <div class="exp-company-meta">
+                            <span><i class="far fa-calendar-alt me-1"></i> Oct 2022 – Present</span>
+                            <span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span>
+                            <p class="exp-company-summary">Worked across multiple projects as a Software Engineer serving multiple clients to develop and maintain digital services.</p>
+                        </div>
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="exp-cognizant-track"><i class="fas fa-chevron-left"></i></button>
+                            <div class="carousel-container">
+                                <div class="carousel-track" id="exp-cognizant-track">
+                                    <div class="carousel-item-card exp-card">
+                                        <div>
+                                            <div class="exp-card-meta">
+
+                                            </div>
+                                            <h5 class="project-title">Angular Developer</h5>
+                                            <p class="exp-client"><i class="fas fa-building me-1"></i>DL Insurance Services</p>
+                                            <p class="project-desc">Maintained and developed Angular components for the frontend part of the insurance services platform.</p>
+                                        </div>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">Angular 17+</span>
+                                            <span class="tech-tag">TypeScript</span>
+                                            <span class="tech-tag">HTML</span>
+                                            <span class="tech-tag">CSS</span>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item-card exp-card">
+                                        <div>
+                                            <div class="exp-card-meta"></div>
+                                            <h5 class="project-title">Fullstack Java Developer</h5>
+                                            <p class="exp-client"><i class="fas fa-building me-1"></i>TD Insurance</p>
+                                            <p class="project-desc">Led architecture and engineering cycles using Angular 17+ and Spring Boot microservices, boosting security compliance and data monitoring throughput.</p>
+                                        </div>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">Angular 17+</span>
+                                            <span class="tech-tag">Spring Boot</span>
+                                            <span class="tech-tag">SQL</span>
+                                            <span class="tech-tag">REST API</span>
+                                        </div>
+                                    </div>
+                                    <div class="carousel-item-card exp-card">
+                                        <div>
+                                            <div class="exp-card-meta">                                        
+                                            </div>
+                                            <h5 class="project-title">Java Developer</h5>
+                                            <p class="exp-client"><i class="fas fa-building me-1"></i>RBC Insurance</p>
+                                            <p class="project-desc">Worked with offshore team to develop, maintain and upgrade digital services using Java 17+ and Spring Boot microservices, improving framework security compliance.</p>
+                                        </div>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">Java 17+</span>
+                                            <span class="tech-tag">Spring Boot</span>
+                                            <span class="tech-tag">REST API</span>
+                                            <span class="tech-tag">Datadog</span>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
-                            <div class="project-card">
-                                <div class="project-meta"><span><i class="far fa-calendar-alt me-1"></i> Feb 2022 - Jan2024</span><span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span></div>
-                                <h2>Java Developer</h2>
-                                <h5>RBC Insurance</h5>
-                                <p>Led architecture and engineering cycles using Java17+ and Spring Boot microservices, boosting operational framework security compliance and data monitoring throughput.</p>
-                                <div class="project-tech"><span class="tech-tag">Java 17+</span><span class="tech-tag">Spring Boot</span><span class="tech-tag">Datadog</span></div>
-                            </div>
+                            <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="exp-cognizant-track"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
 
+                    <!-- EY GDS -->
                     <div class="brand-panel" id="brand-ey" role="tabpanel">
-                        <div class="project-grid">
-                            <div class="project-card">
-                                <div class="project-meta"><span><i class="far fa-calendar-alt me-1"></i> Sept 2021 - Nov 2021</span><span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span></div>
-                                <h2>Data Engineer Intern</h2>
-                                <h5>EY GDS Hub</h5>
-                                <p>Designed architectural data warehouse pipelines utilizing star-schema modeling patterns and query optimization routines, cutting pipeline processing lag by 40%.</p>
-                                <div class="project-tech"><span class="tech-tag">Oracle SQL</span><span class="tech-tag">Data Modeling</span><span class="tech-tag">Python</span></div>
+                        <div class="exp-company-meta">
+                            <span><i class="far fa-calendar-alt me-1"></i> Sept 2021 – Nov 2021</span>
+                            <span><i class="fas fa-map-marker-alt me-1"></i> Kolkata, India</span>
+                            <p class="exp-company-summary">Interacted with the Data Engineering team to learn, execute and modify the techniques of modern day Data Modelling.</p>
+                        </div>
+                        <div class="carousel-wrapper">
+                            <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="exp-ey-track"><i class="fas fa-chevron-left"></i></button>
+                            <div class="carousel-container">
+                                <div class="carousel-track" id="exp-ey-track">
+
+                                    <div class="carousel-item-card exp-card">
+                                        <div>
+                                            <div class="exp-card-meta">
+                                                <span><i class="far fa-calendar-alt me-1"></i>Sept 2021 – Nov 2021</span>
+                                            </div>
+                                            <h5 class="project-title">Data Engineer Intern</h5>
+                                            <p class="exp-client"><i class="fas fa-building me-1"></i>EY GDS Hub</p>
+                                            <p class="project-desc">Designed architectural data warehouse pipelines using star-schema modelling and query optimization routines, cutting pipeline processing lag by 40%.</p>
+                                        </div>
+                                        <div class="project-tech">
+                                            <span class="tech-tag">Oracle SQL</span>
+                                            <span class="tech-tag">Data Modeling</span>
+                                            <span class="tech-tag">Python</span>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
+                            <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="exp-ey-track"><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
+
                 </div>
             </section>
 
+
             <section id="tech-education" class="section">
+
                 <div class="container">
+
                     <h3 class="section-title reveal-up">Education</h3>
-                    
+
+
+
                     <div class="nested-sub-tabs reveal-up" role="tablist">
+
                         <button class="nested-tab active" data-sub-target="edu-panel-1" role="tab" aria-selected="true">Post Graduation</button>
+
                         <button class="nested-tab" data-sub-target="edu-panel-2" role="tab" aria-selected="false">Graduation</button>
+
                         <button class="nested-tab" data-sub-target="edu-panel-3" role="tab" aria-selected="false">Higher Secondary</button>
+
                         <button class="nested-tab" data-sub-target="edu-panel-4" role="tab" aria-selected="false">Secondary</button>
+
                     </div>
 
+
+
                     <div class="nested-panel active" id="edu-panel-1" role="tabpanel">
-                        <div class="project-card"><h4>Master of Technology (M.Tech)</h4>
-                            <p >
+
+                        <div class="project-card">
+
+                            <h4>Master of Technology (M.Tech)</h4>
+
+                            <p>
+
                                 <a href="https://www.nit.ac.in/" target="_blank" rel="noopener noreferrer">Narula Institute of Technology</a><br>
-                                 <a> 
-                                    <span>
-                                        Department of Electronics & Communication Engineering<br>
-                                        2020 - 2022<br>
-                                        CGPA: 9.30
-                                    </span>
-                                </a>
+
+                                <span>Department of Electronics &amp; Communication Engineering<br>2020 - 2022<br>CGPA: 9.30</span>
+
+                                <p>Explored the fundamentals of Signal and related systems.</p>
+
+                                <div class="project-tech"><span class="tech-tag">Signal Processing</span><span class="tech-tag">Signal Analysis</span><span class="tech-tag">Antenna Designing</span></div>
+
                             </p>
+
                         </div>
+
                     </div>
+
                     <div class="nested-panel" id="edu-panel-2" role="tabpanel">
-                        <div class="project-card"><h4>Bachelor of Technology (B.Tech)</h4>
-                            <p >
-                                <a href="https://www.surtech.edu.in/" target="_blank" rel="noopener noreferrer">Dr.Sudhir Chandra Sur Degree Engineering College</a><br>
-                                 <a> 
-                                    <span>
-                                        Department of Electronics & Communication Engineering<br>
-                                        2016 - 2020<br>
-                                        CGPA: 7.40
-                                    </span>
-                                </a>
+
+                        <div class="project-card">
+
+                            <h4>Bachelor of Technology (B.Tech)</h4>
+
+                            <p>
+
+                                <a href="https://www.surtech.edu.in/" target="_blank" rel="noopener noreferrer">Dr. Sudhir Chandra Sur Degree Engineering College</a><br>
+
+                                <span>Department of Electronics &amp; Communication Engineering<br>2016 - 2020<br>CGPA: 7.40</span>
+
+                                <p>Familiarized with the fundamentals of Electronics and Communication systems</p>
+
+                                <div class="project-tech"><span class="tech-tag">Arduino</span><span class="tech-tag">Signals processing</span><span class="tech-tag">Electronic systems</span></div>
+
                             </p>
+
                         </div>
+
                     </div>
+
                     <div class="nested-panel" id="edu-panel-3" role="tabpanel">
-                        <div class="project-card"><h4>Senior Secondary Schooling(12th) CBSE</h4>
-                            <p >
-                                <a href="https://dumdumigmhs.org/" target="_blank" rel="noopener noreferrer">Indira Gandhi Memorial High School,DumDum</a><br>
-                                 <a> 
-                                    <span>
-                                        Department of Science<br>
-                                        2014 - 2016<br>
-                                        Percentage: 69.60%
-                                    </span>
-                                </a>
+
+                        <div class="project-card">
+
+                            <h4>Senior Secondary Schooling (12th) CBSE</h4>
+
+                            <p>
+
+                                <a href="https://dumdumigmhs.org/" target="_blank" rel="noopener noreferrer">Indira Gandhi Memorial High School, DumDum</a><br>
+
+                                <span>Department of Science<br>2014 - 2016<br>Percentage: 69.60%</span>
+
                             </p>
+
                         </div>
+
                     </div>
+
                     <div class="nested-panel" id="edu-panel-4" role="tabpanel">
-                        <div class="project-card"><h4>High School Education Council(10th) ICSE</h4>
-                            <p >
-                                <a href="https://ststephensschool.edu.in/" target="_blank" rel="noopener noreferrer">St.Stephen's School,DumDum</a><br>
-                                 <a> 
-                                    <span>
-                                        Department of Science<br>
-                                        2013 - 2014<br>
-                                        Percentage: 79.80%
-                                    </span>
-                                </a>
+
+                        <div class="project-card">
+
+                            <h4>High School Education Council (10th) ICSE</h4>
+
+                            <p>
+
+                                <a href="https://ststephensschool.edu.in/" target="_blank" rel="noopener noreferrer">St. Stephen's School, DumDum</a><br>
+
+                                <span>Department of Science<br>2013 - 2014<br>Percentage: 79.80%</span>
+
                             </p>
+
                         </div>
+
                     </div>
+
                 </div>
+
             </section>
         </div>
 
+        <!-- ===== CREATIVE MODULES ===== -->
         <div id="creative-modules-wrapper" style="display: none;">
+
+            <!-- Creative Services Strip (Jessy Walter style) -->
+            <section class="creative-services-strip section">
+                <div class="container">
+                    <div class="creative-services-grid">
+                        <div class="creative-service-card reveal-up">
+                            <div class="creative-service-icon"><i class="fas fa-camera"></i></div>
+                            <h5>Photography</h5>
+                            <p>Documentary, street &amp; travel photography that captures authentic moments.</p>
+                        </div>
+                        <div class="creative-service-card reveal-up">
+                            <div class="creative-service-icon"><i class="fas fa-plane-departure"></i></div>
+                            <h5>Travel & Exploration</h5>
+                            <p>Adventures across Incredible India — every journey tells a unique story.</p>
+                        </div>
+                        <div class="creative-service-card reveal-up">
+                            <div class="creative-service-icon">
+                                <svg viewBox="0 0 50 50" width="28" height="28" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" rx="7" fill="#001e36"/><text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#31a8ff">Ps</text></svg>
+                            </div>
+                            <h5>Photoshop Editing</h5>
+                            <p>Advanced Adobe Photoshop post-processing for refined, emotive imagery.</p>
+                        </div>
+                        <div class="creative-service-card reveal-up">
+                            <div class="creative-service-icon">
+                                <svg viewBox="0 0 50 50" width="28" height="28" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" rx="7" fill="#001a29"/><text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="19" font-weight="700" fill="#aad6f8">Lr</text></svg>
+                            </div>
+                            <h5>Lightroom</h5>
+                            <p>Precision colour grading and catalog management for professional shoots.</p>
+                        </div>
+                    </div>
+                    <!-- Why Hire Me (Jessy style right column) -->
+                    <div class="creative-why-me reveal-up">
+                        <p class="creative-why-eyebrow">— My Skills</p>
+                        <h3 class="creative-why-heading">Why Hire Me For Your Next Project?</h3>
+                        <p class="creative-why-text">With a HIPA International Photography Merit Award and years of visual storytelling experience across India, I bring a refined eye and technical precision to every project. Every frame is purposeful — rooted in observation, composed with intention.</p>
+                        <div class="creative-stat-row">
+                            <div class="creative-stat"><span class="cstat-num">5+</span><span class="cstat-label">Years Shooting</span></div>
+                            <div class="creative-stat"><span class="cstat-num">1</span><span class="cstat-label">HIPA Award</span></div>
+                            <div class="creative-stat"><span class="cstat-num">∞</span><span class="cstat-label">Stories Told</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             <section id="creative-achievements" class="section">
                 <div class="container">
                     <h3 class="section-title reveal-up">Achievements</h3>
-                    
                     <div class="carousel-wrapper">
                         <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="creative-certs-track"><i class="fas fa-chevron-left"></i></button>
                         <div class="carousel-container">
                             <div class="carousel-track" id="creative-certs-track">
-                                
                                 <div class="carousel-item-card">
                                     <div>
                                         <h5 class="project-title">HIPA International Photography Merit Award</h5>
-                                        <p class="cert-issuer"><i class="fas fa-award me-1"></i>Theme: Diversity<br>Creative Art Section</p>
+                                        <p class="cert-issuer"><i class="fas fa-award me-1"></i>Theme: Diversity — Creative Art Section</p>
                                         <p class="cert-date"><i class="fas fa-calendar-alt me-1"></i>Issued: 2023</p>
                                     </div>
                                     <a class="btn-cert" href="https://drive.google.com/file/d/1UMPSEmCzT__h7nCIkxI7AzJU5sXAhF2e/view?usp=sharing" target="_blank" rel="noopener noreferrer">Merit Accomplishment</a>
                                 </div>
-
                                 <div class="carousel-item-card">
                                     <div>
                                         <h5 class="project-title">Documentary & Visual Storytelling</h5>
@@ -345,7 +559,6 @@
                                     </div>
                                     <a class="btn-cert" href="#" target="_blank" rel="noopener noreferrer">Creative Accomplishment</a>
                                 </div>
-
                             </div>
                         </div>
                         <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="creative-certs-track"><i class="fas fa-chevron-right"></i></button>
@@ -353,49 +566,56 @@
                 </div>
             </section>
 
-            <!-- REMOVED INSTAGRAM GRID -> INSTALLED DYNAMIC BLOG CAROUSEL -->
-            <section id="creative-works" class="section">
+            <section id="creative-gallery" class="section">
                 <div class="container">
-                    <h3 class="section-title reveal-up">Featured Blog Entries</h3>
-                    <div class="carousel-wrapper reveal-up">
-                        <button class="carousel-arrow carousel-arrow--left" aria-label="Scroll left" data-track-id="blog-stream-track"><i class="fas fa-chevron-left"></i></button>
-                        <div class="carousel-container">
-                            <div class="carousel-track" id="blog-stream-track">
-                                <div class="p-3 text-muted">Aggregating fresh data feeds from the blog hub...</div>
-                            </div>
+                    <h3 class="section-title reveal-up">Photography Gallery</h3>
+                    <p class="gallery-subtitle reveal-up">A curated selection from the field — documentary, street &amp; travel frames captured across India.</p>
+                    <div class="photo-gallery-grid" id="photo-gallery-grid">
+                        <!-- Cards injected by JS after photos are added to assets/gallery/ -->
+                        <div class="gallery-placeholder">
+                            <i class="fas fa-camera-retro"></i>
+                            <p>Loading gallery...</p>
                         </div>
-                        <button class="carousel-arrow carousel-arrow--right" aria-label="Scroll right" data-track-id="blog-stream-track"><i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
             </section>
+
+        </div><!-- end #creative-modules-wrapper -->
+
+        <!-- LIGHTBOX OVERLAY -->
+        <div id="photo-lightbox" class="photo-lightbox" role="dialog" aria-modal="true" aria-label="Photo lightbox">
+            <button id="lightbox-close" class="lightbox-close" aria-label="Close lightbox"><i class="fas fa-times"></i></button>
+            <img id="lightbox-img" src="" alt="Expanded photo" class="lightbox-img">
+            <p id="lightbox-caption" class="lightbox-caption"></p>
         </div>
 
+        <!-- ===== CONTACT ===== -->
         <section id="contact" class="section hello-deck-section">
             <div class="container">
                 <h2 class="section-title text-center mb-5 reveal-up"></h2>
                 <div class="hello-deck reveal-up">
                     <div class="hello-deck-item">
                         <a href="mailto:ishanmukherjee66@gmail.com" class="hello-deck-icon icon-email" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                        <div class="hello-side-popup"><h6>Drop me a mail if you have any proposals or collaborations in mind.</h6></div>
+                        <div class="hello-side-popup"><h6>Drop me a mail for proposals or collaborations.</h6></div>
                     </div>
                     <div class="hello-deck-item">
-                        <a href="https://www.linkedin.com/in/ishan-mukhopadhyay-7ab867123/" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        <div class="hello-side-popup"><h6>Connect with me on LinkedIn for professional updates.</h6></div>
+                        <a href="https://www.linkedin.com/in/ishan-mukhopadhyay" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-linkedin" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <div class="hello-side-popup"><h6>Connect on LinkedIn for professional updates.</h6></div>
                     </div>
                     <div class="hello-deck-item">
-                        <a href="https://wa.me/8697128399" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://wa.me/918697128399" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-whatsapp" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                         <div class="hello-side-popup"><h6>Direct real-time communication on WhatsApp.</h6></div>
                     </div>
                     <div class="hello-deck-item">
-                        <a href="https://maps.app.goo.gl/WX5TppHP8aopbEJWA?g_st=ac" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-map" aria-label="Google Map Location"><i class="fas fa-map-marked-alt"></i></a>
-                        <div class="hello-side-popup"><h6>If you're in Kolkata, let's meet up!</h6></div>
+                        <a href="https://maps.app.goo.gl/WX5TppHP8aopbEJWA?g_st=ac" target="_blank" rel="noopener noreferrer" class="hello-deck-icon icon-map" aria-label="Location"><i class="fas fa-map-marked-alt"></i></a>
+                        <div class="hello-side-popup"><h6>Based in Kolkata, India — let's meet up!</h6></div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer style="color:#ffd60a;">
+    <footer>
         <p>© 2026 Ishan's Portfolio. All rights reserved.</p>
     </footer>
 
