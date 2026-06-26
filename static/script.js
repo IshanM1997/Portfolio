@@ -435,32 +435,90 @@ document.addEventListener('DOMContentLoaded', () => {
     // =====================================================
     // CREATIVE PHOTO GALLERY (replaces Blog section)
     //
-    // Add actual photos to assets/gallery/ and update
-    // the src paths and captions in the photos array below.
+    // =====================================================
+    // CREATIVE PHOTO GALLERY
+    //
+    // HOW TO ADD YOUR PHOTOS:
+    //   1. Create folder: assets/gallery/
+    //   2. Add your photos named: photo1.jpg, photo2.jpg ... photo9.jpg
+    //   3. Update the PHOTOS array below with your real captions & tags
+    //   4. Reload — gallery appears automatically
     // =====================================================
     let galleryLoaded = false;
 
-    function loadPhotoGallery() {
+    // ── Edit this array with your actual photo details ──
+    const PHOTOS = [
+        { file: 'photo1.jpg',  caption: 'Streets of Kolkata',     tag: 'Street'       },
+        { file: 'photo2.jpg',  caption: 'Golden Hour, Rajasthan',  tag: 'Travel'       },
+        { file: 'photo3.jpg',  caption: 'Festival of Colours',     tag: 'Documentary'  },
+        { file: 'photo4.jpg',  caption: 'Monsoon Reflections',     tag: 'Nature'       },
+        { file: 'photo5.jpg',  caption: 'Temple Silhouette',       tag: 'Architecture' },
+        { file: 'photo6.jpg',  caption: 'Market at Dawn',          tag: 'Street'       },
+        { file: 'photo7.jpg',  caption: 'Riverside at Dusk',       tag: 'Travel'       },
+        { file: 'photo8.jpg',  caption: 'Village Life',            tag: 'Documentary'  },
+        { file: 'photo9.jpg',  caption: 'Old City Lanes',          tag: 'Street'       },
+    ];
+
+    const GALLERY_BASE = './assets/gallery/';
+
+    // Check if an image URL actually loads (returns a promise)
+    function imageExists(url) {
+        return new Promise(resolve => {
+            const img = new Image();
+            img.onload  = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = url;
+        });
+    }
+
+    async function loadPhotoGallery() {
         if (galleryLoaded) return;
         galleryLoaded = true;
 
         const grid = document.getElementById('photo-gallery-grid');
         if (!grid) return;
 
-        const FALLBACK = 'https://images.unsplash.com/photo-1614102073832-030967418971?q=80&w=600&auto=format&fit=crop';
+        // Show loading state
+        grid.innerHTML = `<div class="gallery-placeholder">
+            <i class="fas fa-circle-notch fa-spin"></i>
+            <p>Loading gallery…</p>
+        </div>`;
 
-        // Replace src with actual photo paths once files are added
-        const photos = [
-            { src: './assets/gallery/photo1.jpg', caption: 'Streets of Kolkata',    tag: 'Street'       },
-            { src: './assets/gallery/photo2.jpg', caption: 'Golden Hour, Rajasthan', tag: 'Travel'       },
-            { src: './assets/gallery/photo3.jpg', caption: 'Festival of Colours',    tag: 'Documentary'  },
-            { src: './assets/gallery/photo4.jpg', caption: 'Monsoon Reflections',    tag: 'Nature'       },
-            { src: './assets/gallery/photo5.jpg', caption: 'Temple Silhouette',      tag: 'Architecture' },
-            { src: './assets/gallery/photo6.jpg', caption: 'Market at Dawn',         tag: 'Street'       },
-        ];
+        // Probe each photo — only include ones that actually load
+        const checks = await Promise.all(
+            PHOTOS.map(async photo => {
+                const url = GALLERY_BASE + photo.file;
+                const ok  = await imageExists(url);
+                return ok ? { ...photo, url } : null;
+            })
+        );
+
+        const available = checks.filter(Boolean);
 
         grid.innerHTML = '';
-        photos.forEach(photo => {
+
+        if (available.length === 0) {
+            // No photos found — show a friendly setup guide instead of broken images
+            grid.innerHTML = `
+                <div class="gallery-setup-guide">
+                    <div class="setup-icon"><i class="fas fa-camera-retro"></i></div>
+                    <h4>Add Your Photos</h4>
+                    <p>Create the folder <code>assets/gallery/</code> in your project and drop your photos in — named <code>photo1.jpg</code> through <code>photo9.jpg</code>. Then update the captions in the <code>PHOTOS</code> array inside <code>script.js</code>.</p>
+                    <div class="setup-steps">
+                        <div class="setup-step"><span class="step-num">1</span><span>Create <code>assets/gallery/</code> folder</span></div>
+                        <div class="setup-step"><span class="step-num">2</span><span>Add <code>photo1.jpg</code> … <code>photo9.jpg</code></span></div>
+                        <div class="setup-step"><span class="step-num">3</span><span>Edit captions in <code>script.js → PHOTOS</code></span></div>
+                        <div class="setup-step"><span class="step-num">4</span><span>Reload — gallery appears automatically</span></div>
+                    </div>
+                    <a href="https://www.instagram.com/ishan_mukherjee_1997" target="_blank" rel="noopener noreferrer" class="btn-primary-creative" style="display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.5rem">
+                        <i class="fab fa-instagram"></i> View on Instagram
+                    </a>
+                </div>`;
+            return;
+        }
+
+        // Render available photos
+        available.forEach(photo => {
             const card = document.createElement('div');
             card.className = 'photo-card reveal-up';
             card.setAttribute('role', 'button');
@@ -468,9 +526,10 @@ document.addEventListener('DOMContentLoaded', () => {
             card.setAttribute('aria-label', 'View: ' + photo.caption);
             card.innerHTML = `
                 <div class="photo-card-img-wrap">
-                    <img src="${photo.src}" alt="${photo.caption}"
-                         onerror="this.src='${FALLBACK}'"
-                         class="photo-card-img" loading="lazy">
+                    <img src="${photo.url}"
+                         alt="${photo.caption}"
+                         class="photo-card-img"
+                         loading="lazy">
                     <div class="photo-card-overlay">
                         <span class="photo-tag">${photo.tag}</span>
                         <p class="photo-caption">${photo.caption}</p>
